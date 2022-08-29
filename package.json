@@ -1,6 +1,6 @@
 {
   "name": "openseadragon-select-plugin",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "adds the uption to select with mouse to viewer",
   "main": "dist/index.js",
   "scripts": {
@@ -18,7 +18,7 @@
     "url": "git+https://github.com/tuvia-r/openseadragon-select-plugin.git"
   },
   "publishConfig": {
-    "registry":"https://npm.pkg.github.com"
+    "registry": "https://npm.pkg.github.com"
   },
   "keywords": [
     "openseadragon",
