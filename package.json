@@ -17,6 +17,9 @@
     "type": "git",
     "url": "git+https://github.com/tuvia-r/openseadragon-select-plugin.git"
   },
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com"
+  },
   "keywords": [
     "openseadragon",
     "select",
