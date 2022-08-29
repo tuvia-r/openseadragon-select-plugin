@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "allowJs": true,
+        "alwaysStrict": true,
+        "checkJs": false,
+        "outDir": "dist",
+        "target": "ESNext",
+        "moduleResolution": "node",
+        "declarationMap": true,
+        "declaration": true,
+        "typeRoots": [
+            "../node_modules/@types"
+        ],
+        "types": ["jest"],
+        "esModuleInterop": true
+    },
+    "include": ["src"],
+    "exclude": ["node_modules"]
+}
