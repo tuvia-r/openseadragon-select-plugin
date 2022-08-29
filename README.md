@@ -1,5 +1,6 @@
 # openseadragon-select-plugin
-plugin for openseadragon to allow selecting with the mouse
+plugin for openseadragon image viewer.
+this plugin adds the ability to select regains of the image by mouse jesters.
 
 ## installation
 ```sh
@@ -15,12 +16,11 @@ Include openseadragon-select-plugin after OpenSeadragon in your file.
     const viewer = new Viewer({})
 ```
 
-Then after you create a viewer:
+Then after you create a viewer you can call the `selection` method from the viewer instance:
 
 ```js
     const selection = viewer.selection(options);
 ```
-the selection object has three methods:
 
 ### options
 the options is just an object with a callback function who is called once the  selecting is done:
@@ -32,7 +32,7 @@ the options is just an object with a callback function who is called once the  s
 ```
 
 ### Selection
-the selection object has 3 methods:
+the selection object has three methods:
 
 ```js
     selection.enable();
@@ -88,26 +88,13 @@ class CustomShape extends BaseShape {
 custom shapes need to be registered manually:
 
 ```js
-    viewer.selectionHandler.drawer.addShapes(...customShapesConstructor)
+    viewer.selectionHandler.drawer.addShapes(...customShapesConstructor[])
 ```
 
 and then you can select them by:
 
 ```js
     viewer.selectionHandler.drawer.setDrawerShape(CustomShape.name)
-```
-    (constructor.name)
-
-
-
-## development
-```sh
-$ npm i
-```
-
-## development
-```sh
-$ npm test
 ```
 
 ## License
