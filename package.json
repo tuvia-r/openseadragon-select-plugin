@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "jest",
-    "build": "npm run clean && tsc",
+    "build": "tsc",
     "clean": "rm -rf dist",
     "version": "sh version.sh",
     "pretest": "npm run lint",
