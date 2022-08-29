@@ -1,6 +1,6 @@
 # openseadragon-select-plugin
 plugin for openseadragon image viewer.
-this plugin adds the ability to select regains of the image by mouse jesters.
+this plugin adds the ability to select regains of the image by mouse gestures.
 
 ## installation
 ```sh
