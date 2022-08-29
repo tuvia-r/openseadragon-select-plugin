@@ -76,7 +76,7 @@ you will need to implement these abstract methods/fields:
 class CustomShape extends BaseShape {
     readonly rect: Rect;
 
-    createSvgRect(): Path2D;
+    createSvgShape(): Path2D;
 
     startDrawing(point: Point): void;
     updateDrawing(point: Point): void;

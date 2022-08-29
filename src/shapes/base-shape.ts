@@ -34,7 +34,7 @@ export abstract class BaseShape {
 
   draw(context2d: CanvasRenderingContext2D): void {
     this.setDrawOptions(context2d);
-    const svg = this.createSvgRect();
+    const svg = this.createSvgShape();
 
     context2d.stroke(svg);
     context2d.fill(svg);
@@ -51,7 +51,7 @@ export abstract class BaseShape {
     context2d.lineWidth = this.drawingOptions.lineWidth;
   }
 
-  abstract createSvgRect(): Path2D;
+  abstract createSvgShape(): Path2D;
 
   abstract startDrawing(point: Point): void;
   abstract updateDrawing(point: Point): void;

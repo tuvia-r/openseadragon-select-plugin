@@ -13,7 +13,7 @@ export class RectShape extends BaseShape {
     return new Rect(x, y, x1 - x, y1 - y);
   }
 
-  createSvgRect() {
+  createSvgShape() {
     if (!this.bottomLeft) {
       return new Path2D();
     }
