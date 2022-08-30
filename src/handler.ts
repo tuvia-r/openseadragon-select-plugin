@@ -66,10 +66,12 @@ export class OsdSelectionHandler {
 
 	private updateZoom(zoomData: OpenSeadragon.ZoomEvent) {
 		this.frontCanvas.zoom = zoomData.zoom ?? 1;
+		this.backCanvas.zoom = zoomData.zoom ?? 1;
 	}
 
 	private updateLoop() {
 		this.frontCanvas.update();
+		this.backCanvas.update();
 		requestAnimationFrame(this.updateLoop.bind(this));
 	}
 

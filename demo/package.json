@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "openseadragon": "^3.1.0",
-    "openseadragon-select-plugin": "v1.0.11"
+    "openseadragon-select-plugin": "v1.0.12"
   },
   "devDependencies": {
     "parcel": "^2.7.0",
