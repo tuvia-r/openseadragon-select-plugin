@@ -25,15 +25,25 @@ export class RectShape extends BaseShape {
     return svg;
   }
 
-  startDrawing(point: Point): void {
+  onMouseDown(point: Point): void {
+    if(!this.isDrawing){
+      return;
+    }
     this.topLeft = point.clone();
   }
-  updateDrawing(point: Point): void {
+  onMouseMove(point: Point): void {
+    if(!this.isDrawing){
+      return;
+    }
     this.bottomLeft = point.clone();
   }
-  endDrawing(point?: Point): void {
+  onMouseUp(point?: Point): void {
+    if(!this.isDrawing){
+      return;
+    }
+    this.finishDrawing()
     if (point) {
-      this.updateDrawing(point);
+      this.onMouseMove(point);
     }
   }
 }

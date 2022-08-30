@@ -52,19 +52,20 @@ export class FrontCanvas extends CanvasBase {
       return;
     }
 
-    const drawingShape = this.drawer.start(point);
+    const drawingShape = this.drawer.onMouseDown(point);
     this.add(drawingShape as BaseShape);
+
+    this.checkIfDrawingFinished(drawingShape)
+    this.requestUpdate();
   }
 
   private onMouseUp(event: MouseEvent) {
     const point = this.getCoordsFromMouseEvent(event);
     this.keepInBounds(point);
-    const drawnShape = this.drawer.end(point) as BaseShape;
+    const drawnShape = this.drawer.onMouseUp(point) as BaseShape;
 
-    if (drawnShape) {
-      this.remove(drawnShape);
-      this.executeDrawEndCallback(drawnShape);
-    }
+    this.checkIfDrawingFinished(drawnShape)
+    this.requestUpdate();
   }
 
   private onMouseMove(event: MouseEvent) {
@@ -73,7 +74,8 @@ export class FrontCanvas extends CanvasBase {
     }
     const point = this.getCoordsFromMouseEvent(event);
     this.keepInBounds(point);
-    this.drawer.update(point);
+    const shape = this.drawer.onMouseMove(point);
+    this.checkIfDrawingFinished(shape)
     this.requestUpdate();
   }
 
@@ -87,5 +89,12 @@ export class FrontCanvas extends CanvasBase {
   getCoordsFromMouseEvent(event: MouseEvent) {
     const point = new Point(event.pageX, event.pageY);
     return this.viewer?.viewport.windowToImageCoordinates(point);
+  }
+
+  checkIfDrawingFinished(drawnShape: BaseShape){
+    if (!this.drawer.drawing) {
+      this.remove(drawnShape);
+      this.executeDrawEndCallback(drawnShape);
+    }
   }
 }

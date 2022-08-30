@@ -1,8 +1,10 @@
 import { Point } from 'openseadragon';
+import { BrushShape } from '../shapes';
 import { BaseShape, DrawingOptions } from '../shapes/base-shape';
+import { PolygonShape } from '../shapes/polygon';
 import { RectShape } from '../shapes/rect';
 
-const predefinedShapes = [RectShape];
+const predefinedShapes = [RectShape, PolygonShape, BrushShape];
 const defaultDrawingOptions = {
   color: 'rgb(200, 0, 0)',
   lineWidth: 2,
@@ -11,19 +13,19 @@ const defaultDrawingOptions = {
 
 export class Drawer {
   readonly shapes: Map<string, new (drawOptions: DrawingOptions, viewer: OpenSeadragon.Viewer) => BaseShape> = new Map();
-  private drawerShape: string;
+  private drawerActiveShape: string;
   private activeShape?: BaseShape;
   drawOptions: DrawingOptions = defaultDrawingOptions;
   constructor(private viewer: OpenSeadragon.Viewer) {
 
     predefinedShapes.map(shape => {
       this.addShapes(shape);
-      this.setDrawerShape(shape.name);
     })
+    this.setDrawerShape(RectShape.name);
   }
 
   get drawing() {
-    return !!this.activeShape;
+    return this.activeShape && this.activeShape.isDrawing;
   }
 
   addShapes(...shapeConstructors: (new (drawOptions: DrawingOptions, viewer: OpenSeadragon.Viewer) => BaseShape)[]) {
@@ -32,39 +34,54 @@ export class Drawer {
 
   setDrawerShape(name: string) {
     if (this.shapes.has(name)) {
-      this.drawerShape = name;
+      this.drawerActiveShape = name;
     } else {
       throw new Error(`no shape found with name ${name}`);
     }
   }
 
-  start(point: Point) {
-    if (this.activeShape) {
-      this.activeShape.dispose();
-    }
-    const shapeConstructor = this.shapes.get(this.drawerShape);
+  private getNewShape() {
+    const shapeConstructor = this.shapes.get(this.drawerActiveShape);
     if (!shapeConstructor) {
-      return;
+      throw new Error(`no constructor found for ${this.drawerActiveShape}`)
     }
-    this.activeShape = new shapeConstructor(this.drawOptions, this.viewer);
-    this.activeShape.startDrawing(point);
+    return new shapeConstructor(this.drawOptions, this.viewer);
+  }
+
+  onMouseDown(point: Point) {
+    if (this.activeShape && !this.activeShape.isDrawing) {
+      this.activeShape.dispose();
+      this.activeShape = undefined;
+    }
+    if (!this.activeShape){
+      this.activeShape = this.getNewShape()
+      this.activeShape.startDrawing(point);
+    }
+    this.activeShape.onMouseDown(point)
     return this.activeShape;
   }
 
-  update(point: Point) {
-    if (!this.activeShape) {
+  onMouseMove(point: Point) {
+    if (!this.activeShape || !this.activeShape.isDrawing) {
       return;
     }
-    this.activeShape.updateDrawing(point);
+    this.activeShape.onMouseMove(point);
+    return this.activeShape;
   }
 
-  end(point: Point) {
-    if (!this.activeShape) {
+  onMouseUp(point: Point) {
+    if (!this.activeShape  || !this.activeShape.isDrawing) {
       return;
     }
-    this.activeShape.endDrawing(point);
+    this.activeShape.onMouseUp(point);
     const drawnShape = this.activeShape;
-    this.activeShape = undefined;
+    if(!drawnShape.isDrawing){
+      this.stopDrawing()
+    }
     return drawnShape;
+  }
+
+  private stopDrawing() {
+      
   }
 }
