@@ -42,20 +42,8 @@ jobs:
       - name: build
         run: |
           cd demo && npm run build
-      - name: clean
-        run: |
-          rm -rf src
-          rm -rf test
-          rm -rf .git
-          rm package.json
-          cd demo
-          rm -rf .git
-          rm -rf .parcel-cache
-          rm -rf node_modules
-          rm -rf src
-      - name: move files to root
-        run: |
-          find . -mindepth 2 -type f -print -exec mv {} . \;
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
+        with:
+          build_dir: demo/dist
