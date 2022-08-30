@@ -1,6 +1,6 @@
 {
   "name": "openseadragon-select-plugin",
-  "version": "1.0.13-3",
+  "version": "1.0.13-4",
   "description": "adds the uption to select with mouse to viewer",
   "main": "dist/index.js",
   "scripts": {
