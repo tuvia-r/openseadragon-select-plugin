@@ -4,7 +4,6 @@ import {
 	FrontCanvas,
 } from '../canvases/front-canvas';
 import { BaseShape } from '../shapes/base-shape';
-import { RectShape } from '../shapes/rect';
 import { SelectionBase } from './selection-base';
 
 export class ShapeSelection extends SelectionBase<BaseShape> {
@@ -31,10 +30,10 @@ export class ShapeSelection extends SelectionBase<BaseShape> {
 		this.frontCanvas.deactivate();
 	}
 
-	onDrawDone(rect: RectShape) {
+	onDrawDone(shape: BaseShape) {
 		this.disable();
 		if (this.onSelection) {
-			this.onSelection(rect.rect, rect);
+			this.onSelection(shape.rect, shape);
 		}
 	}
 }

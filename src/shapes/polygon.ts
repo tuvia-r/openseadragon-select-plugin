@@ -1,5 +1,5 @@
 import { Point, Rect } from 'openseadragon';
-import { areLinesIntersecting } from '../utils';
+// import { areLinesIntersecting } from '../utils';
 import { BaseShape } from './base-shape';
 
 const KEYCODE_ESC = 'Escape';
@@ -11,7 +11,7 @@ export class PolygonShape extends BaseShape {
 	private floatingPoint: Point;
 
 	get closingDistance() {
-		return PolygonShape.closingDistance
+		return PolygonShape.closingDistance;
 	}
 
 	get rect() {
@@ -34,7 +34,7 @@ export class PolygonShape extends BaseShape {
 		});
 		if (this.isDrawing && this.points.length !== 0) {
 			const [lastPoint] = this.points.slice(-1);
-            svg.addPath(this.createPoint(lastPoint));
+			svg.addPath(this.createPoint(lastPoint));
 			svg.addPath(
 				this.createLine(
 					lastPoint,
@@ -110,8 +110,9 @@ export class PolygonShape extends BaseShape {
 		const [lastPoint] = this.points.slice(-1);
 
 		if (
-			this.toViewerCoords(firstPoint).distanceTo(this.toViewerCoords(lastPoint)) <
-			this.closingDistance
+			this.toViewerCoords(firstPoint).distanceTo(
+				this.toViewerCoords(lastPoint),
+			) < this.closingDistance
 		) {
 			this.finishDrawing();
 		}
