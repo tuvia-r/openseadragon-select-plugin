@@ -15,6 +15,18 @@ export class OsdSelectionHandler {
 			'zoom',
 			this.updateZoom.bind(this),
 		);
+		this.viewer.addHandler(
+			'pan',
+			this.requestUpdate.bind(this),
+		);
+		this.viewer.addHandler(
+			'rotate',
+			this.requestUpdate.bind(this),
+		);
+		this.viewer.addHandler(
+			'flip',
+			this.requestUpdate.bind(this),
+		);
 		this.viewer.addOnceHandler(
 			'open',
 			this.init.bind(this),
@@ -37,8 +49,7 @@ export class OsdSelectionHandler {
 	}
 
 	private onResize() {
-		this.frontCanvas.requestUpdate();
-		this.backCanvas.requestUpdate();
+		this.requestUpdate();
 	}
 
 	private dispose() {
@@ -67,6 +78,11 @@ export class OsdSelectionHandler {
 	private updateZoom(zoomData: OpenSeadragon.ZoomEvent) {
 		this.frontCanvas.zoom = zoomData.zoom ?? 1;
 		this.backCanvas.zoom = zoomData.zoom ?? 1;
+	}
+
+	private requestUpdate() {
+		this.frontCanvas.requestUpdate();
+		this.backCanvas.requestUpdate();
 	}
 
 	private updateLoop() {
