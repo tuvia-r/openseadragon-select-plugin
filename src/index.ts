@@ -7,5 +7,6 @@ declare module 'openseadragon' {
     interface Viewer {
       selectionHandler: OsdSelectionHandler;
       selection: ViewerSelectionType;
+      initSelection: () => void;
     }
 }
