@@ -43,6 +43,9 @@ jobs:
         run: |
           cd demo && npm run build
           cp -R demo/dist .
+      - name: copy files
+        run: |
+          cp -R demo/dist .
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
