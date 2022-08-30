@@ -9,15 +9,21 @@ export type ViewerSelectionType = (options: {
 
 export function selection(
 	this: Viewer,
-	options: { onSelection: (rect: Rect, shape: BaseShape) => void, keep: boolean },
+	options: {
+		onSelection: (rect: Rect, shape: BaseShape) => void;
+		keep: boolean;
+	},
 ) {
 	this.initSelection();
-	if(options.keep) {
+	if (options.keep) {
 		const originalCallback = options.onSelection;
-		options.onSelection = (rect: Rect, shape: BaseShape) => {
-			this.selectionHandler.addShape(shape)
+		options.onSelection = (
+			rect: Rect,
+			shape: BaseShape,
+		) => {
+			this.selectionHandler.addShape(shape);
 			return originalCallback(rect, shape);
-		}
+		};
 	}
 	return new ShapeSelection(
 		this.selectionHandler.frontCanvas,
