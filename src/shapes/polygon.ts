@@ -1,4 +1,5 @@
 import { Point, Rect } from 'openseadragon';
+import { areLinesIntersecting } from '../utils';
 import { BaseShape } from './base-shape';
 
 const KEYCODE_ESC = 'Escape';
@@ -96,12 +97,7 @@ export class PolygonShape extends BaseShape {
 				point,
 			];
 			for (const arc of this.arcs) {
-				if (
-					this.areLinesIntersecting(
-						arc,
-						currentArc,
-					)
-				) {
+				if (areLinesIntersecting(arc, currentArc)) {
 					return;
 				}
 			}
@@ -149,36 +145,6 @@ export class PolygonShape extends BaseShape {
 		);
 	}
 
-	areLinesIntersecting(
-		line1: [Point, Point],
-		line2: [Point, Point],
-	) {
-		const [from1, to1] = line1;
-		const [from2, to2] = line2;
-
-		const dX: number = to1.x - from1.x;
-		const dY: number = to1.y - from1.y;
-
-		const determinant: number =
-			dX * (to2.y - from2.y) - (to2.x - from2.x) * dY;
-		if (determinant === 0) return undefined; // parallel lines
-
-		const lambda: number =
-			((to2.y - from2.y) * (to2.x - from1.x) +
-				(from2.x - to2.x) * (to2.y - from1.y)) /
-			determinant;
-		const gamma: number =
-			((from1.y - to1.y) * (to2.x - from1.x) +
-				dX * (to2.y - from1.y)) /
-			determinant;
-
-		const hasIntersection =
-			(0 <= lambda && lambda <= 1) ||
-			!(0 <= gamma && gamma <= 1);
-
-		return hasIntersection;
-	}
-
 	startDrawing(point: Point) {
 		this.initKeyListener();
 		super.startDrawing(point);
@@ -187,7 +153,9 @@ export class PolygonShape extends BaseShape {
 	protected finishDrawing(): void {
 		this.disposeKeyListener();
 		super.finishDrawing();
-        this.viewer.selectionHandler.frontCanvas.checkIfDrawingFinished(this)
+		this.viewer.selectionHandler.frontCanvas.checkIfDrawingFinished(
+			this,
+		);
 	}
 
 	onMouseDown(point: Point): void {
