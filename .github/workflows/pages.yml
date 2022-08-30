@@ -41,7 +41,9 @@ jobs:
           cd demo && npm install
       - name: build
         run: |
-          cd demo && npx parcel build
+          cd demo && npm run build
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
+        with:
+          publish_dir: ./demo/dist
