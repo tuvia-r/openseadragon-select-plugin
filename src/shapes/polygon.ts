@@ -38,6 +38,7 @@ export class PolygonShape extends BaseShape {
 		});
 		if (this.isDrawing && this.points.length !== 0) {
 			const [lastPoint] = this.points.slice(-1);
+            svg.addPath(this.createPoint(lastPoint));
 			svg.addPath(
 				this.createLine(
 					lastPoint,
@@ -90,18 +91,18 @@ export class PolygonShape extends BaseShape {
 			return;
 		}
 
-		if (this.arcs.slice(0, -1)) {
-			const [lastPoint] = this.points.slice(-1);
-			const currentArc: [Point, Point] = [
-				lastPoint,
-				point,
-			];
-			for (const arc of this.arcs) {
-				if (areLinesIntersecting(arc, currentArc)) {
-					return;
-				}
-			}
-		}
+		// if (this.arcs.slice(0, -1)) {
+		// 	const [lastPoint] = this.points.slice(-1);
+		// 	const currentArc: [Point, Point] = [
+		// 		lastPoint,
+		// 		point,
+		// 	];
+		// 	for (const arc of this.arcs) {
+		// 		if (areLinesIntersecting(arc, currentArc)) {
+		// 			return;
+		// 		}
+		// 	}
+		// }
 		this.points.push(point);
 	}
 
