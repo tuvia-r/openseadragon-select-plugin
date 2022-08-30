@@ -44,9 +44,10 @@ jobs:
           cd demo && npm run build
       - name: clean
         run: |
-          cd demo && rm -rf .parcel-cache
-          cd demo && rm -rf node_modules
-          cd demo && rm -rf src
+          cd demo
+          rm -rf .parcel-cache
+          rm -rf node_modules
+          rm -rf src
       - name: move files to root
         run: |
           find . -mindepth 2 -type f -print -exec mv {} . \;
