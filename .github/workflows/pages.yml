@@ -35,12 +35,15 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          # Upload entire repository
           path: './demo'
-      - name: npm install, build and test
+      - name: checkout to the demo folder
         run: |
           cd ./demo
+      - name: npm install
+        run: |
           npm install
+      - name: build
+        run: |
           npx parcel build
       - name: Deploy to GitHub Pages
         id: deployment
