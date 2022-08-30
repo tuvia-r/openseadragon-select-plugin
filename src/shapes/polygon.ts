@@ -11,11 +11,7 @@ export class PolygonShape extends BaseShape {
 	private floatingPoint: Point;
 
 	get closingDistance() {
-		const point = new Point(
-			PolygonShape.closingDistance,
-			PolygonShape.closingDistance,
-		);
-		return Math.abs(this.toViewerCoords(point).x);
+		return PolygonShape.closingDistance
 	}
 
 	get rect() {
@@ -114,7 +110,7 @@ export class PolygonShape extends BaseShape {
 		const [lastPoint] = this.points.slice(-1);
 
 		if (
-			firstPoint.distanceTo(lastPoint) <
+			this.toViewerCoords(firstPoint).distanceTo(this.toViewerCoords(lastPoint)) <
 			this.closingDistance
 		) {
 			this.finishDrawing();
