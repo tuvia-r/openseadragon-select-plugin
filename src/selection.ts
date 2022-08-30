@@ -3,16 +3,35 @@ import { OsdSelectionHandler } from './handler';
 import { ShapeSelection } from './selection/shape-selection';
 import { BaseShape } from './shapes/base-shape';
 
-export type ViewerSelectionType = (options: {
+export interface ViewerSelectionOptions {
 	onSelection: (rect: Rect, shape: BaseShape) => void;
-}) => ShapeSelection;
+	keep: boolean;
+}
+
+export type ViewerSelectionType = (
+	options: ViewerSelectionOptions,
+) => ShapeSelection;
+
+export function wrapSelectionCallback(
+	viewer: Viewer,
+	options: ViewerSelectionOptions,
+) {
+	if (options.keep) {
+		const originalCallback = options.onSelection;
+		options.onSelection = (
+			rect: Rect,
+			shape: BaseShape,
+		) => {
+			viewer.selectionHandler.addShape(shape);
+			return originalCallback(rect, shape);
+		};
+	}
+	return options.onSelection;
+}
 
 export function selection(
 	this: Viewer,
-	options: {
-		onSelection: (rect: Rect, shape: BaseShape) => void;
-		keep: boolean;
-	},
+	options: ViewerSelectionOptions,
 ) {
 	this.initSelection();
 	if (options.keep) {
@@ -27,7 +46,7 @@ export function selection(
 	}
 	return new ShapeSelection(
 		this.selectionHandler.frontCanvas,
-		options.onSelection,
+		wrapSelectionCallback(this, options),
 	);
 }
 

@@ -6,6 +6,7 @@ const KEYCODE_ESC = 'Escape';
 
 export class PolygonShape extends BaseShape {
 	static closingDistance = 5;
+	static pointSize = 3;
 	points: Point[] = [];
 
 	private floatingPoint: Point;
@@ -73,7 +74,7 @@ export class PolygonShape extends BaseShape {
 		newSvg.arc(
 			localPoint.x,
 			localPoint.y,
-			5,
+			PolygonShape.pointSize,
 			0,
 			2 * Math.PI,
 		);
