@@ -1,32 +1,40 @@
 import { Rect } from 'openseadragon';
-import { DrawEndCallback, FrontCanvas } from '../canvases/front-canvas';
+import {
+	DrawEndCallback,
+	FrontCanvas,
+} from '../canvases/front-canvas';
 import { BaseShape } from '../shapes/base-shape';
 import { RectShape } from '../shapes/rect';
 import { SelectionBase } from './selection-base';
 
 export class ShapeSelection extends SelectionBase<BaseShape> {
-  private unsubscribe?: () => void;
-  constructor(private frontCanvas: FrontCanvas, onSelection: (rect: Rect, shape: BaseShape) => void) {
-    super(onSelection);
-  }
+	private unsubscribe?: () => void;
+	constructor(
+		private frontCanvas: FrontCanvas,
+		onSelection: (rect: Rect, shape: BaseShape) => void,
+	) {
+		super(onSelection);
+	}
 
-  enable() {
-    super.enable();
-    this.unsubscribe = this.frontCanvas.onDrawEnd(this.onDrawDone.bind(this) as DrawEndCallback);
-    this.frontCanvas.activate();
-  }
-  disable() {
-    if (this.unsubscribe) {
-      this.unsubscribe();
-    }
-    super.disable();
-    this.frontCanvas.deactivate();
-  }
+	enable() {
+		super.enable();
+		this.unsubscribe = this.frontCanvas.onDrawEnd(
+			this.onDrawDone.bind(this) as DrawEndCallback,
+		);
+		this.frontCanvas.activate();
+	}
+	disable() {
+		if (this.unsubscribe) {
+			this.unsubscribe();
+		}
+		super.disable();
+		this.frontCanvas.deactivate();
+	}
 
-  onDrawDone(rect: RectShape) {
-    this.disable();
-    if (this.onSelection) {
-      this.onSelection(rect.rect, rect);
-    }
-  }
+	onDrawDone(rect: RectShape) {
+		this.disable();
+		if (this.onSelection) {
+			this.onSelection(rect.rect, rect);
+		}
+	}
 }

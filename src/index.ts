@@ -4,8 +4,9 @@ import { ViewerSelectionType } from './selection';
 export * from './shapes';
 
 declare module 'openseadragon' {
-    interface Viewer {
-      selectionHandler: OsdSelectionHandler;
-      selection: ViewerSelectionType;
-    }
+	interface Viewer {
+		selectionHandler: OsdSelectionHandler;
+		selection: ViewerSelectionType;
+		initSelection: () => void;
+	}
 }

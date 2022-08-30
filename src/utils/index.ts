@@ -1,1 +1,2 @@
-export * from './uid'
+export * from './uid';
+export * from './intersection';

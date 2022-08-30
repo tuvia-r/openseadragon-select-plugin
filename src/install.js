@@ -8,4 +8,5 @@
         }
     }
     osd.Viewer.prototype.selection = plugin.selection;
+    osd.Viewer.prototype.initSelection = plugin.initSelection;
 })()

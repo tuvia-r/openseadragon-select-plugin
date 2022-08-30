@@ -60,6 +60,13 @@ defaults to:
 
 ### shapes
 
+the default shape is `RectShape` but `PolygonShape` and `BrushShape` are also available.
+
+other shapes can be activated by:
+```js
+    viewer.selectionHandler.drawer.setDrawerShape(Shape.name)
+```
+
 you can add custom shapes by extending the abstract `BaseShape` class
 
 ```js
