@@ -41,10 +41,10 @@ jobs:
           cd ./demo
       - name: npm install
         run: |
-          npm install
+          cd demo && npm install
       - name: build
         run: |
-          npx parcel build
+          cd demo && npx parcel build
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
