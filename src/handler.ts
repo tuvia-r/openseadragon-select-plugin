@@ -7,6 +7,7 @@ export class OsdSelectionHandler {
 	readonly frontCanvas: FrontCanvas;
 	readonly backCanvas: BackCanvas;
 	private resizeObserver: ResizeObserver;
+	private delayedUpdateRequested = false;
 
 	constructor(private viewer: OpenSeadragon.Viewer) {
 		this.frontCanvas = new FrontCanvas(viewer);
@@ -83,9 +84,19 @@ export class OsdSelectionHandler {
 	private requestUpdate() {
 		this.frontCanvas.requestUpdate();
 		this.backCanvas.requestUpdate();
+		setTimeout(
+			(() =>
+				(this.delayedUpdateRequested = true)).bind(
+				this,
+			),
+			10,
+		);
 	}
 
 	private updateLoop() {
+		if (this.delayedUpdateRequested) {
+			this.requestUpdate();
+		}
 		this.frontCanvas.update();
 		this.backCanvas.update();
 		requestAnimationFrame(this.updateLoop.bind(this));

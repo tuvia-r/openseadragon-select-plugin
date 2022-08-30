@@ -18,6 +18,8 @@ function onSelectionCallBack(rect, shape) {
 		JSON.stringify(rect);
 }
 
+window.viewer = viewer;
+
 let selection;
 
 const onSelectStartClick = () => {
