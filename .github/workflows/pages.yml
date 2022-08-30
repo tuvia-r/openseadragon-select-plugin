@@ -44,7 +44,12 @@ jobs:
           cd demo && npm run build
       - name: clean
         run: |
+          rm -rf src
+          rm -rf test
+          rm -rf .git
+          rm package.json
           cd demo
+          rm -rf .git
           rm -rf .parcel-cache
           rm -rf node_modules
           rm -rf src
