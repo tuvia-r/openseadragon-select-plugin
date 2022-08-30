@@ -51,7 +51,7 @@ export class PolygonShape extends BaseShape {
 
 	private get arcs() {
 		const res = [];
-		if (this.points.length < 3) {
+		if (this.points.length < 2) {
 			return res;
 		}
 		for (let i = 0; i < this.points.length - 1; i++) {
