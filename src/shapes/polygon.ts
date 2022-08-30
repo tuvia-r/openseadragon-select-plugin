@@ -15,7 +15,7 @@ export class PolygonShape extends BaseShape {
 			PolygonShape.closingDistance,
 			PolygonShape.closingDistance,
 		);
-		return this.toViewerCoords(point).x;
+		return Math.abs(this.toViewerCoords(point).x);
 	}
 
 	get rect() {
