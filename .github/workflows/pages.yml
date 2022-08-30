@@ -42,9 +42,14 @@ jobs:
       - name: build
         run: |
           cd demo && npm run build
-      - name: copy files
+      - name: clean
         run: |
-          cp -R demo/dist .
+          cd demo && rm -rf .parcel-cache
+          cd demo && rm -rf node_modules
+          cd demo && rm -rf src
+      - name: move files to root
+        run: |
+          find . -mindepth 2 -type f -print -exec mv {} . \;
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
