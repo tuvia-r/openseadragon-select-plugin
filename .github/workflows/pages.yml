@@ -44,6 +44,7 @@ jobs:
           cd demo && npm install
       - name: build
         run: |
+          echo $(pwd)
           cd demo && npx parcel build
       - name: Deploy to GitHub Pages
         id: deployment
