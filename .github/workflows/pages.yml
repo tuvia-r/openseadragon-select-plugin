@@ -42,7 +42,6 @@ jobs:
       - name: build
         run: |
           cd demo && npm run build
-          cp -R demo/dist .
       - name: copy files
         run: |
           cp -R demo/dist .
