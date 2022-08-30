@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "parcel build src/index.js && cp src/index.html dist"
+    "build": "rm -rf dist && parcel build src/index.js && cp src/index.html dist"
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +13,11 @@
     "openseadragon-select-plugin": "^1.0.10"
   },
   "devDependencies": {
-    "parcel": "^2.7.0"
+    "parcel": "^2.7.0",
+    "parcel-plugin-static-files-copy": "^2.6.0",
+    "parcel-reporter-static-files-copy": "^1.4.0"
+  },
+  "staticFiles": {
+    "staticPath": "node_modules/openseadragon/build/openseadragon"
   }
 }

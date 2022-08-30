@@ -14,11 +14,22 @@
 <head>
     <meta charset="utf-8"/>
     <title>My First Parcel App</title>
-    <script type="module" src="./index.js"></script>
+    <script type="module" name="app" src="./index.js"></script>
 </head>
 <body>
-<h1>Hello, World!</h1>
+<h1>SpenSeadragon-select-plugin demo</h1>
 <div id="app"></div>
+<div>
+    <button id="onSelectStartClick">Start selecting</button>
+</div>
+<div>
+    <div>Select with:</div>
+    <div>
+        <button id="onRectShape">Rect</button>
+        <button id="onPolygonShape">Polygon</button>
+        <button id="onBrushShape">Brush</button>
+    </div>
+</div>
 <div id="selection"></div>
 </body>
 </html>
