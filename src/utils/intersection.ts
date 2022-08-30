@@ -11,7 +11,7 @@ export const areLinesIntersecting = (
     const dX: number = to1.x - from1.x;
     const dY: number = to1.y - from1.y;
 
-    const determinant: number =
+    const determinant: number = 
         dX * (to2.y - from2.y) - (to2.x - from2.x) * dY;
     if (determinant === 0) return false; // parallel lines
 
@@ -25,8 +25,8 @@ export const areLinesIntersecting = (
         determinant;
 
     const hasIntersection =
-        (0 <= lambda && lambda <= 1) &&
-        (0 <= gamma && gamma <= 1);
+        (0 < lambda && lambda < 1) &&
+        (0 < gamma && gamma < 1);
 
     return hasIntersection;
 }

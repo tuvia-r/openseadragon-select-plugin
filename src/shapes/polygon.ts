@@ -90,7 +90,7 @@ export class PolygonShape extends BaseShape {
 			return;
 		}
 
-		if (this.arcs) {
+		if (this.arcs.slice(0, -1)) {
 			const [lastPoint] = this.points.slice(-1);
 			const currentArc: [Point, Point] = [
 				lastPoint,
