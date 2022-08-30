@@ -174,7 +174,7 @@ export class PolygonShape extends BaseShape {
 		}
 		this.floatingPoint = point.clone();
 	}
-	onMouseUp(point?: Point): void {
+	onMouseUp(): void {
 		if (this.points.length > 3) {
 			this.checkIfClosingNeeded();
 		}
