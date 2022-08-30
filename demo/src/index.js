@@ -5,7 +5,7 @@ const viewer = OpenSeadragon({
     id: "app",
     tileSources: 'https://openseadragon.github.io/example-images/highsmith/highsmith.dzi',
     showNavigationControl: false, // zoom, etc.
-    homeFillsViewer: true, // looks better in artemis
+    homeFillsViewer: true, // ensure image fills space horizontally
     visibilityRatio: 1, // prevent moving image outside viewport
 });
 
