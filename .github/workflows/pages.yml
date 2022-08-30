@@ -36,26 +36,15 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           path: './demo'
+      - name: checkout to the demo folder
+        run: |
+          cd ./demo
       - name: npm install
         run: |
           cd demo && npm install
       - name: build
         run: |
-          cd demo && npm run build
-      - name: clean
-        run: |
-          rm -rf src
-          rm -rf test
-          rm -rf .git
-          rm package.json
-          cd demo
-          rm -rf .git
-          rm -rf .parcel-cache
-          rm -rf node_modules
-          rm -rf src
-      - name: move files to root
-        run: |
-          find . -mindepth 2 -type f -print -exec mv {} . \;
+          cd demo && npx parcel build
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
