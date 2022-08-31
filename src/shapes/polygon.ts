@@ -9,7 +9,6 @@ export class PolygonShape extends GroupShape<
 	LineShape | PointShape
 > {
 	static closingDistance = 5;
-	static pointSize = 3;
 
 	pointShapes: PointShape[] = [];
 	lineShapes: LineShape[] = [];
@@ -75,6 +74,9 @@ export class PolygonShape extends GroupShape<
 		// 		}
 		// 	}
 		// }
+		if (this.lastLine) {
+			this.lastLine.to = point;
+		}
 		this.createPoint(point);
 		this.createLine(point);
 	}
@@ -139,7 +141,7 @@ export class PolygonShape extends GroupShape<
 		}
 		this.addPoint(point.clone());
 
-		if (!this.lastLine) {
+		if (this.lastLine) {
 			this.lastLine.to = point.clone();
 		}
 	}
@@ -147,7 +149,7 @@ export class PolygonShape extends GroupShape<
 		if (!this.isDrawing) {
 			return;
 		}
-		if (!this.lastLine) {
+		if (this.lastLine) {
 			this.lastLine.to = point.clone();
 		}
 	}
