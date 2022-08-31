@@ -105,4 +105,8 @@ export class OsdSelectionHandler {
 	removeShape(shape: BaseShape) {
 		this.backCanvas.remove(shape);
 	}
+
+	clear() {
+		this.backCanvas.clear();
+	}
 }

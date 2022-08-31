@@ -29,9 +29,21 @@ Then after you create a viewer you can call the `selection` method from the view
 the options is just an object with a callback function who is called once the  selecting is done:
 
 ```ts
-    interface selectionOptions { 
-        onSelection: (rect: Rect, shape: BaseShape) => void 
-    }
+    interface ViewerSelectionOptions {
+	/**
+	 * callback that will be called after the drawing is done.
+	 * @param rect bounding box of the selected aria
+	 * @param shape the shape object used to draw the selection
+	 * @required
+	 */
+	onSelection: (rect: Rect, shape: BaseShape) => void;
+	/**
+	 * if set to true, the shape will automatically
+	 * be added to the canvas after drawing is finished.
+	 * @default false
+	 */
+	keep: boolean;
+}
 ```
 
 ### Selection
@@ -41,6 +53,21 @@ the selection object has three methods:
     selection.enable();
     selection.disable();
     selection.toggleState();
+```
+
+you can also add shapes to be displayed on the image by calling:
+
+```js
+viewer.selectionHandler.addShape(shape)
+```
+
+and remove them by:
+
+```js
+viewer.selectionHandler.removeShape(shape)
+// or
+
+viewer.selectionHandler.clear()
 ```
 
 ## Advanced
@@ -67,7 +94,7 @@ the default shape is `RectShape` but `PolygonShape` and `BrushShape` are also av
 
 other shapes can be activated by:
 ```js
-    viewer.selectionHandler.drawer.setDrawerShape(Shape.name)
+    viewer.selectionHandler.drawer.setDrawerShape(ShapeNames.name)
 ```
 
 you can add custom shapes by extending the abstract `BaseShape` class
@@ -94,6 +121,8 @@ class CustomShape extends BaseShape {
 }
 ```
 
+once drawing is finished you need to call `this.finishDrawing()`.
+
 ### registering a custom shape:
 custom shapes need to be registered manually:
 
@@ -104,7 +133,7 @@ custom shapes need to be registered manually:
 and then you can select them by:
 
 ```js
-    viewer.selectionHandler.drawer.setDrawerShape(CustomShape.type)
+    viewer.selectionHandler.drawer.setDrawerShape(ShapeNames.name)
 ```
 
 ## License
