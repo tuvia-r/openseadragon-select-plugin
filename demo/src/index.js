@@ -16,7 +16,7 @@ const viewer = OpenSeadragon({
 
 let isSelecting = false;
 
-let selection;
+let selectionObj = null;
 
 const btn = document.getElementById('toggle-button');
 
@@ -39,15 +39,15 @@ function onSelect(rect, shape) {
 
 window.viewer = viewer;
 
-const onSelectStartClick = () => {
-	if (selection?.isEnabled) {
+function onSelectStartClick() {
+	if (selectionObj?.isEnabled) {
 		return;
 	}
-	selection = viewer.selection({
+	selectionObj = viewer.selection({
 		onSelection: onSelect,
 		keep: true,
 	});
-	selection.enable();
+	selectionObj.enable();
 	isSelecting = true;
 	btn.innerText = 'Disable Selection';
 	btn.classList.toggle('btn-danger');
@@ -56,13 +56,13 @@ const onSelectStartClick = () => {
 	);
 };
 
-const toggleSelection = (e) => {
+function toggleSelection(){
 	if (isSelecting) {
 		document.getElementById(
 			'btn-dropdown',
 		).hidden = true;
 
-		selection?.disable();
+		selectionObj?.disable();
 		isSelecting = false;
 		btn.innerText = 'Enable Selection';
 		btn.classList.toggle('btn-danger');
@@ -77,7 +77,7 @@ const toggleSelection = (e) => {
 	}
 };
 
-const onRectShape = () => {
+function onRectShape(){
 	viewer.initSelection();
 	viewer.selectionHandler.frontCanvas.drawer.setDrawerShape(
 		RectShape.name,
@@ -85,7 +85,7 @@ const onRectShape = () => {
 	onSelectStartClick();
 };
 
-const onBrushShape = () => {
+function onBrushShape(){
 	viewer.initSelection();
 	viewer.selectionHandler.frontCanvas.drawer.setDrawerShape(
 		BrushShape.name,
@@ -93,7 +93,7 @@ const onBrushShape = () => {
 	onSelectStartClick();
 };
 
-const onPolygonShape = () => {
+function onPolygonShape(){
 	viewer.initSelection();
 	viewer.selectionHandler.frontCanvas.drawer.setDrawerShape(
 		PolygonShape.name,
