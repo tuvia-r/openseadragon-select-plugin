@@ -90,9 +90,12 @@ export class PolygonShape extends GroupShape<
 	}
 
 	private onKeyEsc() {
+		this.finishDrawing();
+	}
+
+	closePolygon() {
 		const [firstPoint] = this.points;
 		this.lastLine.to = firstPoint;
-		this.finishDrawing();
 	}
 
 	private initKeyListener() {
@@ -117,8 +120,7 @@ export class PolygonShape extends GroupShape<
 
 	protected finishDrawing(): void {
 		this.disposeKeyListener();
-		const [firstPoint] = this.points;
-		this.lastLine.to = firstPoint;
+		this.closePolygon();
 		super.finishDrawing();
 		this.viewer.selectionHandler.frontCanvas.checkIfDrawingFinished(
 			this,
