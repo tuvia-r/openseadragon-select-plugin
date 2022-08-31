@@ -8,6 +8,7 @@ export type DrawEndCallback = (
 ) => void | Promise<void>;
 
 export class FrontCanvas extends CanvasBase {
+	private isActivated = false;
 	drawer: Drawer;
 
 	private onDrawEndCallbacks: DrawEndCallback[] = [];
@@ -35,6 +36,9 @@ export class FrontCanvas extends CanvasBase {
 	}
 
 	activate() {
+		if (this.isActivated) {
+			return;
+		}
 		this.canvas.addEventListener(
 			'mousedown',
 			this.onMouseDown.bind(this),
@@ -51,6 +55,7 @@ export class FrontCanvas extends CanvasBase {
 			false,
 		);
 		super.activate();
+		this.isActivated = true;
 	}
 
 	deactivate() {
@@ -67,6 +72,7 @@ export class FrontCanvas extends CanvasBase {
 			this.onMouseUp.bind(this),
 		);
 		super.deactivate();
+		this.isActivated = false;
 	}
 
 	private onMouseDown(event: MouseEvent) {
