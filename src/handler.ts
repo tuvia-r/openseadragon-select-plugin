@@ -14,26 +14,25 @@ export class OsdSelectionHandler {
 	readonly backCanvas: BackCanvas;
 
 	private resizeObserver: ResizeObserver;
-	private delayedUpdateRequested = false;
 
 	constructor(private viewer: OpenSeadragon.Viewer) {
 		this.frontCanvas = new FrontCanvas(viewer);
 		this.backCanvas = new BackCanvas();
 		this.viewer.addHandler(
+			'animation',
+			this.requestUpdate.bind(this),
+		);
+		this.viewer.addHandler(
+			'animation-start',
+			this.requestUpdate.bind(this),
+		);
+		this.viewer.addHandler(
+			'animation-finish',
+			this.requestUpdate.bind(this),
+		);
+		this.viewer.addHandler(
 			'zoom',
 			this.updateZoom.bind(this),
-		);
-		this.viewer.addHandler(
-			'pan',
-			this.requestUpdate.bind(this),
-		);
-		this.viewer.addHandler(
-			'rotate',
-			this.requestUpdate.bind(this),
-		);
-		this.viewer.addHandler(
-			'flip',
-			this.requestUpdate.bind(this),
 		);
 		this.viewer.addOnceHandler(
 			'open',
@@ -91,23 +90,9 @@ export class OsdSelectionHandler {
 	private requestUpdate() {
 		this.frontCanvas.requestUpdate();
 		this.backCanvas.requestUpdate();
-
-		// the viewer update has a damping affect...
-		this.delayedUpdateRequested = true;
-		setTimeout(
-			(() =>
-				(this.delayedUpdateRequested = false)).bind(
-				this,
-			),
-			500,
-		);
 	}
 
 	private updateLoop() {
-		if (this.delayedUpdateRequested) {
-			this.frontCanvas.requestUpdate();
-			this.backCanvas.requestUpdate();
-		}
 		this.frontCanvas.update();
 		this.backCanvas.update();
 		requestAnimationFrame(this.updateLoop.bind(this));
