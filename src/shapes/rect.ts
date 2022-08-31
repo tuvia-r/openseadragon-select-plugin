@@ -33,10 +33,10 @@ export class RectShape extends BaseShape {
 		const { x: x1, y: y1 } = this.toViewerCoords(
 			this.bottomLeft,
 		);
-		const svg = new Path2D();
-		svg.moveTo(0, 0);
-		svg.rect(x, y, x1 - x, y1 - y);
-		return svg;
+		const path2d = new Path2D();
+		path2d.moveTo(0, 0);
+		path2d.rect(x, y, x1 - x, y1 - y);
+		return path2d;
 	}
 
 	onMouseDown(point: Point): void {

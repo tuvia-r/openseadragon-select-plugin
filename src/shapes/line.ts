@@ -14,13 +14,14 @@ export class LineShape extends BaseShape {
 	}
 
 	toPath2D() {
-		const svg = new Path2D();
+		const path2d = new Path2D();
 		const localFrom = this.toViewerCoords(this.from);
 		const localTo = this.toViewerCoords(this.to);
-		svg.moveTo(localFrom.x, localFrom.y);
-		svg.lineTo(localTo.x, localTo.y);
-		svg.closePath();
-		return svg;
+		path2d.moveTo(0, 0);
+		path2d.moveTo(localFrom.x, localFrom.y);
+		path2d.lineTo(localTo.x, localTo.y);
+		path2d.closePath();
+		return path2d;
 	}
 
 	onMouseDown(point: Point): void {

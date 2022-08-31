@@ -11,18 +11,18 @@ export class PointShape extends BaseShape {
 	}
 
 	toPath2D() {
-		const svg = new Path2D();
+		const path2d = new Path2D();
 		const localPoint = this.toViewerCoords(this.point);
-		svg.moveTo(0, 0);
-		svg.arc(
+		path2d.moveTo(0, 0);
+		path2d.arc(
 			localPoint.x,
 			localPoint.y,
 			PointShape.pointDisplaySize,
 			0,
 			2 * Math.PI,
 		);
-		svg.closePath();
-		return svg;
+		path2d.closePath();
+		return path2d;
 	}
 
 	onMouseDown(point: Point): void {
