@@ -52,7 +52,7 @@ export abstract class BaseShape {
 		const svg = this.toPath2D();
 
 		context2d.stroke(svg);
-		context2d.fill(svg);
+		context2d.fill(svg, 'evenodd');
 		context2d.save();
 	}
 

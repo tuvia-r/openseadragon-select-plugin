@@ -130,6 +130,7 @@ export class PolygonShape extends GroupShape<
 
 	protected finishDrawing(): void {
 		this.disposeKeyListener();
+		this.lineShapes.pop();
 		super.finishDrawing();
 		this.viewer.selectionHandler.frontCanvas.checkIfDrawingFinished(
 			this,

@@ -11,9 +11,8 @@ export class PointShape extends BaseShape {
 	}
 
 	toPath2D() {
-		const path2d = new Path2D();
 		const localPoint = this.toViewerCoords(this.point);
-		path2d.moveTo(0, 0);
+		const path2d = new Path2D();
 		path2d.arc(
 			localPoint.x,
 			localPoint.y,
