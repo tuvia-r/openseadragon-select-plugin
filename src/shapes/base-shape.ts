@@ -6,7 +6,6 @@ export interface ShapeConstructor {
 		drawOptions: DrawingOptions,
 		viewer: OpenSeadragon.Viewer,
 	): BaseShape;
-	type: string;
 }
 
 export interface DrawingOptions {
@@ -16,7 +15,6 @@ export interface DrawingOptions {
 }
 
 export abstract class BaseShape {
-	static type = 'BaseShape';
 	protected _isDisposed = false;
 	protected _isDrawing = false;
 

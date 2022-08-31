@@ -8,10 +8,16 @@ import {
 import { PolygonShape } from '../shapes/polygon';
 import { RectShape } from '../shapes/rect';
 
+export enum ShapeNames {
+	RectShape = 'RectShape',
+	PolygonShape = 'PolygonShape',
+	BrushShape = 'BrushShape',
+}
+
 const predefinedShapes = [
-	RectShape,
-	PolygonShape,
-	BrushShape,
+	{ name: ShapeNames.RectShape, value: RectShape },
+	{ name: ShapeNames.PolygonShape, value: PolygonShape },
+	{ name: ShapeNames.BrushShape, value: BrushShape },
 ];
 const defaultDrawingOptions = {
 	color: 'rgb(200, 0, 0)',
@@ -27,9 +33,9 @@ export class Drawer {
 	drawOptions: DrawingOptions = defaultDrawingOptions;
 	constructor(private viewer: OpenSeadragon.Viewer) {
 		predefinedShapes.map((shape) => {
-			this.addShapes(shape);
+			this.addShape(shape.name, shape.value);
 		});
-		this.setDrawerShape(RectShape.name);
+		this.setDrawerShape(ShapeNames.RectShape);
 	}
 
 	get drawing() {
@@ -38,13 +44,14 @@ export class Drawer {
 		);
 	}
 
-	addShapes(...shapeConstructors: ShapeConstructor[]) {
-		shapeConstructors.map((shape) =>
-			this.shapes.set(shape.type, shape),
-		);
+	addShape(
+		name: ShapeNames | string,
+		shapeConstructor: ShapeConstructor,
+	) {
+		this.shapes.set(name, shapeConstructor);
 	}
 
-	setDrawerShape(name: string) {
+	setDrawerShape(name: ShapeNames | string) {
 		if (this.shapes.has(name)) {
 			this.drawerActiveShape = name;
 		} else {
