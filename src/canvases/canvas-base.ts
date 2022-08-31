@@ -11,7 +11,7 @@ export class CanvasBase {
 
 	protected container?: HTMLElement;
 
-	protected readonly shapes: Map<string, BaseShape> =
+	public readonly shapes: Map<string, BaseShape> =
 		new Map();
 
 	public get zoom() {

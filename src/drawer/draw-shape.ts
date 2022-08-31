@@ -83,7 +83,6 @@ export class Drawer {
 			this.activeShape &&
 			!this.activeShape.isDrawing
 		) {
-			this.activeShape.dispose();
 			this.activeShape = undefined;
 		}
 		if (!this.activeShape) {
