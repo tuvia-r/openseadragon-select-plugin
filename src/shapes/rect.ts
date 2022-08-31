@@ -25,7 +25,7 @@ export class RectShape extends BaseShape {
 		return new Rect(x, y, x1 - x, y1 - y);
 	}
 
-	createSvgShape() {
+	toPath2D() {
 		if (!this.bottomLeft) {
 			return new Path2D();
 		}

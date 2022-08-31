@@ -12,7 +12,7 @@ export class BrushShape extends BaseShape {
 		return new Rect(x, y, x1 - x, y1 - y);
 	}
 
-	createSvgShape() {
+	toPath2D() {
 		if (this.points.length === 0) {
 			return new Path2D();
 		}
