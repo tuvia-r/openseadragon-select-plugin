@@ -56,9 +56,8 @@ export abstract class BaseShape {
 		context2d.save();
 	}
 
-	startDrawing(point: Point) {
+	startDrawing() {
 		this._isDrawing = true;
-		this.onMouseDown(point);
 	}
 
 	isPointOver(

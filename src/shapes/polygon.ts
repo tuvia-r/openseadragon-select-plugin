@@ -111,9 +111,9 @@ export class PolygonShape extends GroupShape<
 		);
 	}
 
-	startDrawing(point: Point) {
+	startDrawing() {
 		this.initKeyListener();
-		super.startDrawing(point);
+		super.startDrawing();
 	}
 
 	protected finishDrawing(): void {

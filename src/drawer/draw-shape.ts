@@ -85,7 +85,7 @@ export class Drawer {
 		}
 		if (!this.activeShape) {
 			this.activeShape = this.getNewShape();
-			this.activeShape.startDrawing(point);
+			this.activeShape.startDrawing();
 		}
 		this.activeShape.onMouseDown(point);
 		return this.activeShape;
