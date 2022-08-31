@@ -130,7 +130,7 @@ export class PolygonShape extends GroupShape<
 		if (this.lastLine) {
 			this.lastLine.to = point;
 		}
-		if (this.points.length > 3) {
+		if (this.points.length > 2) {
 			this.checkIfClosingNeeded();
 		}
 		if (this.isDrawing) {
