@@ -93,12 +93,13 @@ export class OsdSelectionHandler {
 		this.backCanvas.requestUpdate();
 
 		// the viewer update has a damping affect...
+		this.delayedUpdateRequested = true;
 		setTimeout(
 			(() =>
-				(this.delayedUpdateRequested = true)).bind(
+				(this.delayedUpdateRequested = false)).bind(
 				this,
 			),
-			10,
+			500,
 		);
 	}
 
@@ -106,7 +107,6 @@ export class OsdSelectionHandler {
 		if (this.delayedUpdateRequested) {
 			this.frontCanvas.requestUpdate();
 			this.backCanvas.requestUpdate();
-			this.delayedUpdateRequested = false;
 		}
 		this.frontCanvas.update();
 		this.backCanvas.update();
