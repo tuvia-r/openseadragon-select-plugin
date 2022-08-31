@@ -16,6 +16,8 @@ const viewer = OpenSeadragon({
 
 let isSelecting = false;
 
+let selection;
+
 const btn = document.getElementById('toggle-button');
 
 function onSelect(rect, shape) {
