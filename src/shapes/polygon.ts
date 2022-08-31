@@ -133,7 +133,9 @@ export class PolygonShape extends GroupShape<
 		if (this.points.length > 3) {
 			this.checkIfClosingNeeded();
 		}
-		this.addPoint(point.clone());
+		if (this.isDrawing) {
+			this.addPoint(point.clone());
+		}
 	}
 	onMouseMove(point: Point): void {
 		if (!this.isDrawing) {
