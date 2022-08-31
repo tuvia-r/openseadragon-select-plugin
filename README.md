@@ -104,7 +104,7 @@ custom shapes need to be registered manually:
 and then you can select them by:
 
 ```js
-    viewer.selectionHandler.drawer.setDrawerShape(CustomShape.name)
+    viewer.selectionHandler.drawer.setDrawerShape(CustomShape.type)
 ```
 
 ## License

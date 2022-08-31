@@ -2,6 +2,7 @@ import { Point, Rect } from 'openseadragon';
 import { BaseShape } from './base-shape';
 
 export class BrushShape extends BaseShape {
+	static type = 'BrushShape';
 	points: Point[] = [];
 
 	get rect() {

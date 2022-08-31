@@ -1,6 +1,14 @@
 import { Point, Rect } from 'openseadragon';
 import { uid } from '../utils';
 
+export interface ShapeConstructor {
+	new (
+		drawOptions: DrawingOptions,
+		viewer: OpenSeadragon.Viewer,
+	): BaseShape;
+	type: string;
+}
+
 export interface DrawingOptions {
 	color: string;
 	lineWidth: number;
@@ -8,6 +16,7 @@ export interface DrawingOptions {
 }
 
 export abstract class BaseShape {
+	static type = 'BaseShape';
 	protected _isDisposed = false;
 	protected _isDrawing = false;
 

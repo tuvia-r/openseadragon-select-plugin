@@ -5,6 +5,7 @@ import { BaseShape } from './base-shape';
 const KEYCODE_ESC = 'Escape';
 
 export class PolygonShape extends BaseShape {
+	static type = 'PolygonShape';
 	static closingDistance = 5;
 	static pointSize = 3;
 	points: Point[] = [];

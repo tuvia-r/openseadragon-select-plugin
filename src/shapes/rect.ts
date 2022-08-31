@@ -2,6 +2,7 @@ import { Point, Rect } from 'openseadragon';
 import { BaseShape } from './base-shape';
 
 export class RectShape extends BaseShape {
+	static type = 'RectShape';
 	topLeft: Point = new Point();
 	bottomLeft: Point;
 

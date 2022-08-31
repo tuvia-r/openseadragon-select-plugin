@@ -3,6 +3,7 @@ import { BrushShape } from '../shapes';
 import {
 	BaseShape,
 	DrawingOptions,
+	ShapeConstructor,
 } from '../shapes/base-shape';
 import { PolygonShape } from '../shapes/polygon';
 import { RectShape } from '../shapes/rect';
@@ -19,13 +20,8 @@ const defaultDrawingOptions = {
 };
 
 export class Drawer {
-	readonly shapes: Map<
-		string,
-		new (
-			drawOptions: DrawingOptions,
-			viewer: OpenSeadragon.Viewer,
-		) => BaseShape
-	> = new Map();
+	readonly shapes: Map<string, ShapeConstructor> =
+		new Map();
 	private drawerActiveShape: string;
 	private activeShape?: BaseShape;
 	drawOptions: DrawingOptions = defaultDrawingOptions;
@@ -42,14 +38,9 @@ export class Drawer {
 		);
 	}
 
-	addShapes(
-		...shapeConstructors: (new (
-			drawOptions: DrawingOptions,
-			viewer: OpenSeadragon.Viewer,
-		) => BaseShape)[]
-	) {
+	addShapes(...shapeConstructors: ShapeConstructor[]) {
 		shapeConstructors.map((shape) =>
-			this.shapes.set(shape.name, shape),
+			this.shapes.set(shape.type, shape),
 		);
 	}
 
