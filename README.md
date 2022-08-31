@@ -6,6 +6,9 @@ this plugin adds the ability to select regains of the image by mouse gestures.
 ```sh
 $   npm i openseadragon-select-plugin
 ```
+
+## [Working Demo](https://tuvia-r.github.io/openseadragon-select-plugin/)
+
 ## Usage
 Include openseadragon-select-plugin after OpenSeadragon in your file. 
 

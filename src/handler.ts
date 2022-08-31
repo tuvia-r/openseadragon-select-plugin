@@ -4,8 +4,15 @@ import { FrontCanvas } from './canvases/front-canvas';
 import { BaseShape } from './shapes';
 
 export class OsdSelectionHandler {
+	/**
+	 * used for drawing shapes
+	 */
 	readonly frontCanvas: FrontCanvas;
+	/**
+	 * used to display fixed shapes
+	 */
 	readonly backCanvas: BackCanvas;
+
 	private resizeObserver: ResizeObserver;
 	private delayedUpdateRequested = false;
 
@@ -84,6 +91,8 @@ export class OsdSelectionHandler {
 	private requestUpdate() {
 		this.frontCanvas.requestUpdate();
 		this.backCanvas.requestUpdate();
+
+		// the viewer update has a damping affect...
 		setTimeout(
 			(() =>
 				(this.delayedUpdateRequested = true)).bind(
@@ -95,7 +104,9 @@ export class OsdSelectionHandler {
 
 	private updateLoop() {
 		if (this.delayedUpdateRequested) {
-			this.requestUpdate();
+			this.frontCanvas.requestUpdate();
+			this.backCanvas.requestUpdate();
+			this.delayedUpdateRequested = false;
 		}
 		this.frontCanvas.update();
 		this.backCanvas.update();

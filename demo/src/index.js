@@ -11,16 +11,25 @@ const viewer = OpenSeadragon({
 		'https://openseadragon.github.io/example-images/highsmith/highsmith.dzi',
 });
 
-
+/**
+ * 
+ * @param {OpenSeadragon.Rect} rect 
+ * @param {*} shape 
+ */
 function onSelectionCallBack(rect, shape) {
-	console.info(rect, shape);
-	document.getElementById('selection').innerText =
-		JSON.stringify(rect);
+	console.info('onSelectionCallBack', rect, shape);
+	const newDiv = document.createElement('div')
+	newDiv.innerText = `rect: x: ${rect.x}, y: ${rect.y}, width: ${rect.width}, height: ${rect.height}`
+
+	const selectionEl = document.getElementById('selection')
+	selectionEl.prepend(newDiv)
+	selectionEl.childNodes.forEach((el, index) => (index > 2) && selectionEl.removeChild(el))
 }
 
 window.viewer = viewer;
 
 let selection;
+
 
 const onSelectStartClick = () => {
 	if (selection?.isEnabled) {
@@ -39,6 +48,7 @@ const onRectShape = () => {
 	viewer.selectionHandler.frontCanvas.drawer.setDrawerShape(
 		RectShape.name,
 	);
+	onSelectStartClick()
 };
 
 const onBrushShape = () => {
@@ -46,6 +56,7 @@ const onBrushShape = () => {
 	viewer.selectionHandler.frontCanvas.drawer.setDrawerShape(
 		BrushShape.name,
 	);
+	onSelectStartClick()
 };
 
 const onPolygonShape = () => {
@@ -53,12 +64,20 @@ const onPolygonShape = () => {
 	viewer.selectionHandler.frontCanvas.drawer.setDrawerShape(
 		PolygonShape.name,
 	);
+	onSelectStartClick()
 };
+
+const clearCanvas = () => {
+	viewer.initSelection();
+	viewer.selectionHandler.backCanvas.clear()
+	const selectionEl = document.getElementById('selection')
+	selectionEl.childNodes.forEach(el => selectionEl.removeChild(el))
+}
 
 document.addEventListener('DOMContentLoaded', () => {
 	document
-		.getElementById('onSelectStartClick')
-		.addEventListener('click', onSelectStartClick);
+		.getElementById('clearCanvas')
+		.addEventListener('click', clearCanvas);
 	document
 		.getElementById('onPolygonShape')
 		.addEventListener('click', onPolygonShape);

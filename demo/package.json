@@ -4,13 +4,14 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf dist && parcel build src/index.js && cp src/index.html dist"
+    "build": "rm -rf dist && parcel build src/index.js && cp src/index.html dist",
+    "serve": "parcel src/index.html"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "openseadragon": "^3.1.0",
-    "openseadragon-select-plugin": "1.0.13-5"
+    "openseadragon-select-plugin": "file:../openseadragon-select-plugin-1.0.13-5.tgz"
   },
   "devDependencies": {
     "parcel": "^2.7.0",

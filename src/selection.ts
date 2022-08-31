@@ -4,7 +4,18 @@ import { ShapeSelection } from './selection/shape-selection';
 import { BaseShape } from './shapes/base-shape';
 
 export interface ViewerSelectionOptions {
+	/**
+	 * callback that will be called after the drawing is done.
+	 * @param rect bounding box of the selected aria
+	 * @param shape the shape object used to draw the selection
+	 * @required
+	 */
 	onSelection: (rect: Rect, shape: BaseShape) => void;
+	/**
+	 * if set to true, the shape will automatically
+	 * be added to the canvas after drawing is finished.
+	 * @default false
+	 */
 	keep: boolean;
 }
 
