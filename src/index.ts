@@ -2,6 +2,7 @@ import './install';
 import { OsdSelectionHandler } from './handler';
 import { ViewerSelectionType } from './selection';
 export * from './shapes';
+export { ShapeNames } from './drawer/draw-shape';
 
 declare module 'openseadragon' {
 	interface Viewer {

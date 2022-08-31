@@ -1,8 +1,6 @@
 import * as OpenSeadragon from 'openseadragon';
 import {
-	RectShape,
-	PolygonShape,
-	BrushShape,
+	ShapeNames
 } from 'openseadragon-select-plugin';
 
 const viewer = OpenSeadragon({
@@ -80,7 +78,7 @@ function toggleSelection(){
 function onRectShape(){
 	viewer.initSelection();
 	viewer.selectionHandler.frontCanvas.drawer.setDrawerShape(
-		RectShape.name,
+		ShapeNames.RectShape,
 	);
 	onSelectStartClick();
 };
@@ -88,7 +86,7 @@ function onRectShape(){
 function onBrushShape(){
 	viewer.initSelection();
 	viewer.selectionHandler.frontCanvas.drawer.setDrawerShape(
-		BrushShape.name,
+		ShapeNames.BrushShape,
 	);
 	onSelectStartClick();
 };
@@ -96,7 +94,7 @@ function onBrushShape(){
 function onPolygonShape(){
 	viewer.initSelection();
 	viewer.selectionHandler.frontCanvas.drawer.setDrawerShape(
-		PolygonShape.name,
+		ShapeNames.PolygonShape,
 	);
 	onSelectStartClick();
 };
