@@ -47,12 +47,17 @@ the options is just an object with a callback function who is called once the  s
 ```
 
 ### Selection
-the selection object has three methods:
+the selection object has two methods:
 
 ```js
+    /*
+    * activate drawing mode
+    */
     selection.enable();
+    /*
+    * deactivate drawing mode
+    */
     selection.disable();
-    selection.toggleState();
 ```
 
 you can also add shapes to be displayed on the image by calling:
@@ -90,7 +95,7 @@ defaults to:
 
 ### shapes
 
-the default shape is `RectShape` but `PolygonShape` and `BrushShape` are also available.
+the default shape is `RectShape` but `PolygonShape`, `BrushShape` `LineShape` and `PointShape` are also available.
 
 other shapes can be activated by:
 ```js
@@ -107,13 +112,28 @@ you can add custom shapes by extending the abstract `BaseShape` class
     }
 ```
 
+or even create complex shapes by extending the abstract `GroupShape` class:
+
+```js
+export class PolygonShape extends GroupShape<
+	LineShape | PointShape
+> {
+    get shapes () {
+        return [];
+    }
+}
+```
+
 you will need to implement these abstract methods/fields:
 
 ```ts
 class CustomShape extends BaseShape {
     readonly rect: Rect;
 
-    createSvgShape(): Path2D;
+    /*
+    * this is not required in `GroupShape`
+    */
+    toPath2D(): Path2D;
 
     startDrawing(point: Point): void;
     updateDrawing(point: Point): void;
