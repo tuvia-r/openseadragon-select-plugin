@@ -8,7 +8,7 @@ const KEYCODE_ESC = 'Escape';
 export class PolygonShape extends GroupShape<
 	LineShape | PointShape
 > {
-	static closingDistance = 5;
+	static closingDistance = 7;
 
 	pointShapes: PointShape[] = [];
 	lineShapes: LineShape[] = [];

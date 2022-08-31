@@ -128,7 +128,7 @@ you will need to implement these abstract methods/fields:
 
 ```ts
 class CustomShape extends BaseShape {
-    readonly rect: Rect;
+    readonly boundingBox: Rect;
 
     /*
     * this is not required in `GroupShape`
