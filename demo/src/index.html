@@ -1,115 +1,89 @@
 <!doctype html>
 <html lang="en">
 <style>
-    body {
-        font-family: sans-serif;
-        background-color: darkgray;
-    }
-
-    h1 {
-        color: #0a3660
-    }
 
     .is-selecting {
         cursor: crosshair
     }
 
     #app {
-        width: 90vw;
-        height: 80vh;
+        width: 100%;
+        height: 50vh;
         margin: auto;
         border: #0d1736 solid 2px;
-    }
-
-    button {
-        background-color: #0a3660;
-        border: none;
-        color: white;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 14px;
-        margin: 4px 2px;
-        cursor: pointer;
-      }
-
-    .label {
-        font-size: 14px;
-        margin: 4px 2px;
-    }
-
-    .center{
-        justify-items: center;
-        justify-content: center;
-        text-align: center;
-        align-content: center;
-    }
-
-    .start {
-        justify-items: start;
-        justify-content: start;
-    }
-
-    .self-start {
-        justify-self: start;
-    }
-
-    .btns-container{
-        display: flex;
-        flex-direction: row;
-        justify-items: center;
-        justify-content: center;
-        flex-grow: 1;
-    }
-
-    .row {
-        display: flex;
-        flex-direction: row;
-    }
-
-    .column {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .h-100 {
-        height: 100%;
-    }
-
-    .pe-10 {
-        padding-right: 10px;
-    }
-
-    .py-20 {
-        padding-top: 20px;
-        padding-bottom: 20px;
-    }
-
-    .px-20 {
-        padding-right: 20px;
-        padding-left: 20px;
     }
 </style>
 <head>
     <meta charset="utf-8"/>
-    <title>My First Parcel App</title>
-    <script type="module" name="app" src="./index.js"></script>
+    <title>OpenSeadragon Select Plugin</title>
 </head>
 <body>
-<h1>SpenSeadragon-select-plugin demo</h1>
-<div>open console to see callback function results</div>
-<div class="row py-20 px-20">
-    <button id="clearCanvas" class="self-start">clear canvas</button>
-    <span class="btns-container">
-        <div class="column center h-100 pe-10" >Select with:</div>
-        <button id="onRectShape">Rect</button>
-        <button id="onPolygonShape">Polygon</button>
-        <button id="onBrushShape">Brush</button>
-    </span>
+
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">OpenSeadragon Select Plugin</a>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto">
+    <!--                    <li class="nav-item">-->
+    <!--                        <a class="nav-link" href="#">Link</a>-->
+    <!--                    </li>-->
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://twitter.com/RumplerTuvia">
+                                <i class="bi bi-twitter"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://github.com/tuvia-r/openseadragon-select-plugin">
+                                <i class="bi bi-github"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="px-4 my-4 text-center">
+        <h1 class="display-4 fw-bold mb-5">OpenSeadragon Select Plugin</h1>
+        <div class="col-lg-6 mx-auto">
+            <p class="lead mb-4">
+                A lightweight <a href="https://openseadragon.github.io/">OpenSeadragon</a> plugin enabling users to select areas of an image.
+            </p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center my-5">
+                <div class="btn-group">
+                    <button type="button"
+                            id="toggle-button"
+                            class="btn btn-primary btn-lg px-4 me-sm-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Enable Selection
+                    </button>
+                    <div class="dropdown-menu" id="btn-dropdown">
+                        <h6 class="dropdown-header">Choose Shape</h6>
+                        <button class="dropdown-item" id="onRectShape" >Rect</button>
+                        <button class="dropdown-item" id="onPolygonShape" >Polygon</button>
+                        <button class="dropdown-item" id="onBrushShape" >Brush</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mb-2">
+            <div class="container px-5">
+                <div id="app"></div>
+            </div>
+        </div>
+        <pre><code>
+            <div id="selection"></div>
+        </code></pre>
+    </div>
 </div>
-<div id="app"></div>
-</div>
+<script type="module" src="./index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 </body>
 </html>
 

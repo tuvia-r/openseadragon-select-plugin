@@ -9,33 +9,70 @@ const viewer = OpenSeadragon({
 	id: 'app',
 	tileSources:
 		'https://openseadragon.github.io/example-images/highsmith/highsmith.dzi',
+	showNavigationControl: false, // zoom, etc.
+	homeFillsViewer: true, // ensure image fills space horizontally
+	visibilityRatio: 1, // prevent moving image outside viewport
 });
 
-/**
- * 
- * @param {OpenSeadragon.Rect} rect 
- * @param {*} shape 
- */
-function onSelectionCallBack(rect, shape) {
-	console.info('onSelectionCallBack', rect, shape);
+let isSelecting = false;
+
+const btn = document.getElementById('toggle-button');
+
+function onSelect(rect, shape) {
+	console.info(rect, shape);
+	document.getElementById(
+		'selection',
+	).innerText = `x: ${Math.round(
+		rect.x,
+	)} | y: ${Math.round(rect.y)} | width: ${Math.round(
+		rect.width,
+	)} | height: ${Math.round(rect.height)}`;
+	isSelecting = false;
+	btn.innerText = 'Enable Selection';
+	btn.classList.toggle('btn-danger');
+	viewer.selectionHandler.frontCanvas.canvas.classList.toggle(
+		'is-selecting',
+	);
 }
 
 window.viewer = viewer;
-
-let selection;
-
 
 const onSelectStartClick = () => {
 	if (selection?.isEnabled) {
 		return;
 	}
 	selection = viewer.selection({
-		onSelection: onSelectionCallBack,
-        keep: true
+		onSelection: onSelect,
+		keep: true,
 	});
 	selection.enable();
-    console.log('new selection object: ', selection)
-	viewer.selectionHandler.frontCanvas.canvas.className += ' is-selecting';
+	isSelecting = true;
+	btn.innerText = 'Disable Selection';
+	btn.classList.toggle('btn-danger');
+	viewer.selectionHandler.frontCanvas.canvas.classList.toggle(
+		'is-selecting',
+	);
+};
+
+const toggleSelection = (e) => {
+	if (isSelecting) {
+		document.getElementById(
+			'btn-dropdown',
+		).hidden = true;
+
+		selection?.disable();
+		isSelecting = false;
+		btn.innerText = 'Enable Selection';
+		btn.classList.toggle('btn-danger');
+		viewer.selectionHandler.frontCanvas.canvas.classList.toggle(
+			'is-selecting',
+		);
+		btn.click();
+	} else {
+		document.getElementById(
+			'btn-dropdown',
+		).hidden = false;
+	}
 };
 
 const onRectShape = () => {
@@ -43,7 +80,7 @@ const onRectShape = () => {
 	viewer.selectionHandler.frontCanvas.drawer.setDrawerShape(
 		RectShape.name,
 	);
-	onSelectStartClick()
+	onSelectStartClick();
 };
 
 const onBrushShape = () => {
@@ -51,7 +88,7 @@ const onBrushShape = () => {
 	viewer.selectionHandler.frontCanvas.drawer.setDrawerShape(
 		BrushShape.name,
 	);
-	onSelectStartClick()
+	onSelectStartClick();
 };
 
 const onPolygonShape = () => {
@@ -59,18 +96,19 @@ const onPolygonShape = () => {
 	viewer.selectionHandler.frontCanvas.drawer.setDrawerShape(
 		PolygonShape.name,
 	);
-	onSelectStartClick()
+	onSelectStartClick();
 };
 
 const clearCanvas = () => {
 	viewer.initSelection();
-	viewer.selectionHandler.backCanvas.clear()
-}
+	viewer.selectionHandler.backCanvas.clear();
+};
 
 document.addEventListener('DOMContentLoaded', () => {
-	document
-		.getElementById('clearCanvas')
-		.addEventListener('click', clearCanvas);
+	btn.addEventListener('click', toggleSelection);
+	// document
+	// 	.getElementById('clearCanvas')
+	// 	.addEventListener('click', clearCanvas);
 	document
 		.getElementById('onPolygonShape')
 		.addEventListener('click', onPolygonShape);
