@@ -26,6 +26,11 @@ export class PolygonShape extends GroupShape<
 		return lastLine;
 	}
 
+	get lastPoint() {
+		const [lastPoint] = this.pointShapes.slice(-1);
+		return lastPoint;
+	}
+
 	get closingDistance() {
 		return PolygonShape.closingDistance;
 	}
@@ -57,11 +62,6 @@ export class PolygonShape extends GroupShape<
 	}
 
 	private addPoint(point: Point) {
-		const [lastPoint] = this.points.slice(-1);
-		if (lastPoint && lastPoint.equals(point)) {
-			return;
-		}
-
 		// if (this.arcs.slice(0, -1)) {
 		// 	const [lastPoint] = this.points.slice(-1);
 		// 	const currentArc: [Point, Point] = [
@@ -79,6 +79,7 @@ export class PolygonShape extends GroupShape<
 		}
 		this.createPoint(point);
 		this.createLine(point);
+		this.lastLine.to = point.clone();
 	}
 
 	private checkIfClosingNeeded() {
@@ -140,10 +141,6 @@ export class PolygonShape extends GroupShape<
 			return;
 		}
 		this.addPoint(point.clone());
-
-		if (this.lastLine) {
-			this.lastLine.to = point.clone();
-		}
 	}
 	onMouseMove(point: Point): void {
 		if (!this.isDrawing) {
