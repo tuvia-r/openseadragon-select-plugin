@@ -3,12 +3,92 @@
 <style>
     body {
         font-family: sans-serif;
+        background-color: darkgray;
+    }
+
+    h1 {
+        color: #0a3660
+    }
+
+    .is-selecting {
+        cursor: crosshair
     }
 
     #app {
-        width: 80vw;
+        width: 90vw;
         height: 80vh;
         margin: auto;
+        border: #0d1736 solid 2px;
+    }
+
+    button {
+        background-color: #0a3660;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+
+    .label {
+        font-size: 14px;
+        margin: 4px 2px;
+    }
+
+    .center{
+        justify-items: center;
+        justify-content: center;
+        text-align: center;
+        align-content: center;
+    }
+
+    .start {
+        justify-items: start;
+        justify-content: start;
+    }
+
+    .self-start {
+        justify-self: start;
+    }
+
+    .btns-container{
+        display: flex;
+        flex-direction: row;
+        justify-items: center;
+        justify-content: center;
+        flex-grow: 1;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .column {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .h-100 {
+        height: 100%;
+    }
+
+    .pe-10 {
+        padding-right: 10px;
+    }
+
+    .py-20 {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .px-20 {
+        padding-right: 20px;
+        padding-left: 20px;
     }
 </style>
 <head>
@@ -18,20 +98,17 @@
 </head>
 <body>
 <h1>SpenSeadragon-select-plugin demo</h1>
-<div>
-    <button id="clearCanvas">clear canvas</button>
-</div>
-<div>
-    <div>Select with:</div>
-    <div>
+<div>open console to see callback function results</div>
+<div class="row py-20 px-20">
+    <button id="clearCanvas" class="self-start">clear canvas</button>
+    <span class="btns-container">
+        <div class="column center h-100 pe-10" >Select with:</div>
         <button id="onRectShape">Rect</button>
         <button id="onPolygonShape">Polygon</button>
         <button id="onBrushShape">Brush</button>
-    </div>
+    </span>
 </div>
 <div id="app"></div>
-<div>last selection rects:</div>
-<div id="selection">
 </div>
 </body>
 </html>
