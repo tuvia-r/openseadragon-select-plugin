@@ -62,9 +62,6 @@ export class PolygonShape extends GroupShape<
 	}
 
 	private addPoint(point: Point) {
-		if (this.lastLine) {
-			this.lastLine.to = point;
-		}
 		this.createPoint(point);
 		this.createLine(point);
 		this.lastLine.to = point.clone();
@@ -93,6 +90,8 @@ export class PolygonShape extends GroupShape<
 	}
 
 	private onKeyEsc() {
+		const [firstPoint] = this.points;
+		this.lastLine.to = firstPoint;
 		this.finishDrawing();
 	}
 
@@ -125,11 +124,14 @@ export class PolygonShape extends GroupShape<
 	}
 
 	onMouseDown(point: Point): void {
-		if (this.points.length > 3) {
-			this.checkIfClosingNeeded();
-		}
 		if (!this.isDrawing) {
 			return;
+		}
+		if (this.lastLine) {
+			this.lastLine.to = point;
+		}
+		if (this.points.length > 3) {
+			this.checkIfClosingNeeded();
 		}
 		this.addPoint(point.clone());
 	}
