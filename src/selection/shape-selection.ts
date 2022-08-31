@@ -33,7 +33,7 @@ export class ShapeSelection extends SelectionBase<BaseShape> {
 	onDrawDone(shape: BaseShape) {
 		this.disable();
 		if (this.onSelection) {
-			this.onSelection(shape.rect, shape);
+			this.onSelection(shape.boundingBox, shape);
 		}
 	}
 }

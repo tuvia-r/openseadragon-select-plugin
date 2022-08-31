@@ -5,7 +5,7 @@ export class PointShape extends BaseShape {
 	static pointDisplaySize = 3;
 	point: Point = new Point();
 
-	get rect() {
+	get boundingBox() {
 		const { x, y } = this.point;
 		return new Rect(x, y, 0, 0);
 	}

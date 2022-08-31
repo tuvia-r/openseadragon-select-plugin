@@ -4,7 +4,7 @@ import { BaseShape } from './base-shape';
 export class BrushShape extends BaseShape {
 	points: Point[] = [];
 
-	get rect() {
+	get boundingBox() {
 		const x = Math.min(...this.points.map((p) => p.x));
 		const y = Math.min(...this.points.map((p) => p.y));
 		const x1 = Math.max(...this.points.map((p) => p.x));

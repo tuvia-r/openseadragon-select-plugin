@@ -35,7 +35,7 @@ export class PolygonShape extends GroupShape<
 		return PolygonShape.closingDistance;
 	}
 
-	get rect() {
+	get boundingBox() {
 		const x = Math.min(...this.points.map((p) => p.x));
 		const y = Math.min(...this.points.map((p) => p.y));
 		const x1 = Math.max(...this.points.map((p) => p.x));
@@ -75,7 +75,7 @@ export class PolygonShape extends GroupShape<
 			return;
 		}
 		const [firstPoint] = this.points;
-		const [lastPoint] = this.points.slice(-1);
+		const lastPoint = this.lastLine.to;
 
 		if (
 			this.toViewerCoords(firstPoint).distanceTo(
@@ -126,10 +126,14 @@ export class PolygonShape extends GroupShape<
 		);
 	}
 
-	onMouseDown(): void {
+	onMouseDown(point: Point): void {
 		if (this.points.length > 3) {
 			this.checkIfClosingNeeded();
 		}
+		if (!this.isDrawing) {
+			return;
+		}
+		this.addPoint(point.clone());
 	}
 	onMouseMove(point: Point): void {
 		if (!this.isDrawing) {
@@ -139,10 +143,7 @@ export class PolygonShape extends GroupShape<
 			this.lastLine.to = point.clone();
 		}
 	}
-	onMouseUp(point: Point): void {
-		if (!this.isDrawing) {
-			return;
-		}
-		this.addPoint(point.clone());
+	onMouseUp(): void {
+		return;
 	}
 }

@@ -16,29 +16,14 @@ export class FrontCanvas extends CanvasBase {
 	constructor(private viewer: OpenSeadragon.Viewer) {
 		super();
 		this.drawer = new Drawer(viewer);
-	}
-
-	onDrawEnd(callback: DrawEndCallback) {
-		this.onDrawEndCallbacks.push(callback);
-		return () =>
-			this.offDrawEnd.apply(this, [callback]);
-	}
-
-	offDrawEnd(callback: DrawEndCallback) {
-		this.onDrawEndCallbacks =
-			this.onDrawEndCallbacks.filter(
-				(cb) => cb !== callback,
-			);
+		this.init();
 	}
 
 	private executeDrawEndCallback(shape: BaseShape) {
 		this.onDrawEndCallbacks.map((cb) => cb(shape));
 	}
 
-	activate() {
-		if (this.isActivated) {
-			return;
-		}
+	private init() {
 		this.canvas.addEventListener(
 			'mousedown',
 			this.onMouseDown.bind(this),
@@ -54,11 +39,9 @@ export class FrontCanvas extends CanvasBase {
 			this.onMouseUp.bind(this),
 			false,
 		);
-		super.activate();
-		this.isActivated = true;
 	}
 
-	deactivate() {
+	dispose() {
 		this.canvas.removeEventListener(
 			'mousedown',
 			this.onMouseDown.bind(this),
@@ -71,8 +54,6 @@ export class FrontCanvas extends CanvasBase {
 			'mouseup',
 			this.onMouseUp.bind(this),
 		);
-		super.deactivate();
-		this.isActivated = false;
 	}
 
 	private onMouseDown(event: MouseEvent) {
@@ -135,6 +116,19 @@ export class FrontCanvas extends CanvasBase {
 		return point;
 	}
 
+	onDrawEnd(callback: DrawEndCallback) {
+		this.onDrawEndCallbacks.push(callback);
+		return () =>
+			this.offDrawEnd.apply(this, [callback]);
+	}
+
+	offDrawEnd(callback: DrawEndCallback) {
+		this.onDrawEndCallbacks =
+			this.onDrawEndCallbacks.filter(
+				(cb) => cb !== callback,
+			);
+	}
+
 	getCoordsFromMouseEvent(event: MouseEvent) {
 		const point = new Point(event.pageX, event.pageY);
 		return this.viewer?.viewport.windowToImageCoordinates(
@@ -146,7 +140,6 @@ export class FrontCanvas extends CanvasBase {
 		if (!this.drawer.drawing) {
 			this.remove(drawnShape);
 			this.executeDrawEndCallback(drawnShape);
-			this.deactivate();
 		}
 	}
 }

@@ -32,7 +32,7 @@ export abstract class BaseShape {
 	get isDrawing() {
 		return this._isDrawing;
 	}
-	abstract readonly rect: Rect;
+	abstract readonly boundingBox: Rect;
 
 	constructor(
 		protected drawingOptions: DrawingOptions,

@@ -5,7 +5,7 @@ export class RectShape extends BaseShape {
 	topLeft: Point = new Point();
 	bottomLeft: Point;
 
-	get rect() {
+	get boundingBox() {
 		const x = Math.min(
 			this.topLeft.x,
 			this.bottomLeft.x,

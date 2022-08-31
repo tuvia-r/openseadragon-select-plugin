@@ -5,7 +5,7 @@ export class LineShape extends BaseShape {
 	from: Point = new Point();
 	to: Point = new Point();
 
-	get rect() {
+	get boundingBox() {
 		const x = Math.min(this.from.x, this.to.x);
 		const y = Math.min(this.from.y, this.to.y);
 		const x1 = Math.max(this.from.x, this.to.x);
