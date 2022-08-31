@@ -62,18 +62,6 @@ export class PolygonShape extends GroupShape<
 	}
 
 	private addPoint(point: Point) {
-		// if (this.arcs.slice(0, -1)) {
-		// 	const [lastPoint] = this.points.slice(-1);
-		// 	const currentArc: [Point, Point] = [
-		// 		lastPoint,
-		// 		point,
-		// 	];
-		// 	for (const arc of this.arcs) {
-		// 		if (areLinesIntersecting(arc, currentArc)) {
-		// 			return;
-		// 		}
-		// 	}
-		// }
 		if (this.lastLine) {
 			this.lastLine.to = point;
 		}
@@ -138,11 +126,10 @@ export class PolygonShape extends GroupShape<
 		);
 	}
 
-	onMouseDown(point: Point): void {
-		if (!this.isDrawing) {
-			return;
+	onMouseDown(): void {
+		if (this.points.length > 3) {
+			this.checkIfClosingNeeded();
 		}
-		this.addPoint(point.clone());
 	}
 	onMouseMove(point: Point): void {
 		if (!this.isDrawing) {
@@ -152,9 +139,10 @@ export class PolygonShape extends GroupShape<
 			this.lastLine.to = point.clone();
 		}
 	}
-	onMouseUp(): void {
-		if (this.points.length > 3) {
-			this.checkIfClosingNeeded();
+	onMouseUp(point: Point): void {
+		if (!this.isDrawing) {
+			return;
 		}
+		this.addPoint(point.clone());
 	}
 }
