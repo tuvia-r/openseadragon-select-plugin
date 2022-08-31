@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "openseadragon": "^3.1.0",
-    "openseadragon-select-plugin": "file:../openseadragon-select-plugin-1.0.17-3.tgz"
+    "openseadragon-select-plugin": "1.0.17-4"
   },
   "devDependencies": {
     "parcel": "^2.7.0",
