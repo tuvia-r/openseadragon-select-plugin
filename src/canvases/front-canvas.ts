@@ -146,6 +146,7 @@ export class FrontCanvas extends CanvasBase {
 		if (!this.drawer.drawing) {
 			this.remove(drawnShape);
 			this.executeDrawEndCallback(drawnShape);
+			this.deactivate();
 		}
 	}
 }
