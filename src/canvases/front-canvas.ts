@@ -117,7 +117,7 @@ export class FrontCanvas extends CanvasBase {
 	}
 
 	deactivate(): void {
-		this.drawer.reset();
+		this.drawer?.reset();
 		this.clear();
 		return super.deactivate();
 	}
