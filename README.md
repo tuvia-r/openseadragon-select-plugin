@@ -1,6 +1,6 @@
 # openseadragon-select-plugin
 plugin for openseadragon image viewer.
-this plugin adds the ability to select regains of the image by mouse gestures.
+this plugin adds the ability to select regions of the image by mouse gestures.
 
 ## installation
 ```sh
@@ -63,16 +63,21 @@ the selection object has two methods:
 you can also add shapes to be displayed on the image by calling:
 
 ```js
-viewer.selectionHandler.addShape(shape)
+    viewer.selectionHandler.addShape(shape)
 ```
 
 and remove them by:
 
 ```js
-viewer.selectionHandler.removeShape(shape)
-// or
+    viewer.selectionHandler.removeShape(shape)
 
-viewer.selectionHandler.clear()
+    // or remove all by:
+    viewer.selectionHandler.clear()
+```
+
+note: if you want to add shapes without using the `viewer.selection` function, you need to initialize it first by calling `initSelection`:
+```js
+    viewer.initSelection();
 ```
 
 ## Advanced
@@ -114,31 +119,31 @@ you can add custom shapes by extending the abstract `BaseShape` class
 
 or even create complex shapes by extending the abstract `GroupShape` class:
 
-```js
-export class PolygonShape extends GroupShape<
-	LineShape | PointShape
-> {
-    get shapes () {
-        return [];
+```ts
+    class PolygonShape extends GroupShape<
+        LineShape | PointShape
+    > {
+        get shapes (): BaseShape[] {
+            return [];
+        }
     }
-}
 ```
 
 you will need to implement these abstract methods/fields:
 
 ```ts
-class CustomShape extends BaseShape {
-    readonly boundingBox: Rect;
+    class CustomShape extends BaseShape {
+        readonly boundingBox: Rect;
 
-    /*
-    * this is not required in `GroupShape`
-    */
-    toPath2D(): Path2D;
+        /*
+        * this is not required in `GroupShape`
+        */
+        toPath2D(): Path2D;
 
-    startDrawing(point: Point): void;
-    updateDrawing(point: Point): void;
-    endDrawing(point?: Point): void;
-}
+        startDrawing(point: Point): void;
+        updateDrawing(point: Point): void;
+        endDrawing(point?: Point): void;
+    }
 ```
 
 once drawing is finished you need to call `this.finishDrawing()`.
@@ -147,7 +152,7 @@ once drawing is finished you need to call `this.finishDrawing()`.
 custom shapes need to be registered manually:
 
 ```js
-    viewer.selectionHandler.drawer.addShapes(...customShapesConstructor[])
+    viewer.selectionHandler.drawer.addShapes(ShapeNames.name, customShapesConstructor)
 ```
 
 and then you can select them by:
