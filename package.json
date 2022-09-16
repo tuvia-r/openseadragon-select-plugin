@@ -9,7 +9,7 @@
     "clean": "rm -rf dist",
     "version": "sh version.sh",
     "pretest": "npm run lint",
-    "lint": "eslint \"{src}/**/*.ts\" --fix",
+    "lint": "eslint \"src/**/*.ts\" --fix",
     "prepublish": "npm run build",
     "prepack": "npm run build"
   },
