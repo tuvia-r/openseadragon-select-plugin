@@ -11,7 +11,7 @@ export class CanvasBase {
 
 	protected container?: HTMLElement;
 
-	protected readonly shapes: Map<string, BaseShape> =
+	public readonly shapes: Map<string, BaseShape> =
 		new Map();
 
 	public get zoom() {
@@ -77,7 +77,7 @@ export class CanvasBase {
 	}
 
 	add(shape: BaseShape) {
-		if (this.shapes.has(shape.id)) {
+		if (!shape || this.shapes.has(shape.id)) {
 			return;
 		}
 		this.shapes.set(shape.id, shape);
@@ -85,7 +85,7 @@ export class CanvasBase {
 	}
 
 	remove(shape: BaseShape) {
-		if (this.shapes.has(shape.id)) {
+		if (shape && this.shapes.has(shape.id)) {
 			this.shapes.delete(shape.id);
 			this.requestUpdate();
 		}

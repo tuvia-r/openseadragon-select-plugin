@@ -1,5 +1,5 @@
 export const randomNumber = () =>
-	(Math.random() * 10).toFixed(0);
+	Math.random().toString().slice(-1);
 
 export const UID_LENGTH = 7;
 

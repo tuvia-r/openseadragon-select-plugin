@@ -6,6 +6,9 @@ this plugin adds the ability to select regains of the image by mouse gestures.
 ```sh
 $   npm i openseadragon-select-plugin
 ```
+
+## [Working Demo](https://tuvia-r.github.io/openseadragon-select-plugin/)
+
 ## Usage
 Include openseadragon-select-plugin after OpenSeadragon in your file. 
 
@@ -26,18 +29,50 @@ Then after you create a viewer you can call the `selection` method from the view
 the options is just an object with a callback function who is called once the  selecting is done:
 
 ```ts
-    interface selectionOptions { 
-        onSelection: (rect: Rect, shape: BaseShape) => void 
-    }
+    interface ViewerSelectionOptions {
+	/**
+	 * callback that will be called after the drawing is done.
+	 * @param rect bounding box of the selected aria
+	 * @param shape the shape object used to draw the selection
+	 * @required
+	 */
+	onSelection: (rect: Rect, shape: BaseShape) => void;
+	/**
+	 * if set to true, the shape will automatically
+	 * be added to the canvas after drawing is finished.
+	 * @default false
+	 */
+	keep: boolean;
+}
 ```
 
 ### Selection
-the selection object has three methods:
+the selection object has two methods:
 
 ```js
+    /*
+    * activate drawing mode
+    */
     selection.enable();
+    /*
+    * deactivate drawing mode
+    */
     selection.disable();
-    selection.toggleState();
+```
+
+you can also add shapes to be displayed on the image by calling:
+
+```js
+viewer.selectionHandler.addShape(shape)
+```
+
+and remove them by:
+
+```js
+viewer.selectionHandler.removeShape(shape)
+// or
+
+viewer.selectionHandler.clear()
 ```
 
 ## Advanced
@@ -60,11 +95,11 @@ defaults to:
 
 ### shapes
 
-the default shape is `RectShape` but `PolygonShape` and `BrushShape` are also available.
+the default shape is `RectShape` but `PolygonShape`, `BrushShape` `LineShape` and `PointShape` are also available.
 
 other shapes can be activated by:
 ```js
-    viewer.selectionHandler.drawer.setDrawerShape(Shape.name)
+    viewer.selectionHandler.drawer.setDrawerShape(ShapeNames.name)
 ```
 
 you can add custom shapes by extending the abstract `BaseShape` class
@@ -77,19 +112,36 @@ you can add custom shapes by extending the abstract `BaseShape` class
     }
 ```
 
+or even create complex shapes by extending the abstract `GroupShape` class:
+
+```js
+export class PolygonShape extends GroupShape<
+	LineShape | PointShape
+> {
+    get shapes () {
+        return [];
+    }
+}
+```
+
 you will need to implement these abstract methods/fields:
 
 ```ts
 class CustomShape extends BaseShape {
-    readonly rect: Rect;
+    readonly boundingBox: Rect;
 
-    createSvgShape(): Path2D;
+    /*
+    * this is not required in `GroupShape`
+    */
+    toPath2D(): Path2D;
 
     startDrawing(point: Point): void;
     updateDrawing(point: Point): void;
     endDrawing(point?: Point): void;
 }
 ```
+
+once drawing is finished you need to call `this.finishDrawing()`.
 
 ### registering a custom shape:
 custom shapes need to be registered manually:
@@ -101,7 +153,7 @@ custom shapes need to be registered manually:
 and then you can select them by:
 
 ```js
-    viewer.selectionHandler.drawer.setDrawerShape(CustomShape.name)
+    viewer.selectionHandler.drawer.setDrawerShape(ShapeNames.name)
 ```
 
 ## License

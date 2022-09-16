@@ -4,7 +4,7 @@ import { BaseShape } from './base-shape';
 export class BrushShape extends BaseShape {
 	points: Point[] = [];
 
-	get rect() {
+	get boundingBox() {
 		const x = Math.min(...this.points.map((p) => p.x));
 		const y = Math.min(...this.points.map((p) => p.y));
 		const x1 = Math.max(...this.points.map((p) => p.x));
@@ -12,17 +12,17 @@ export class BrushShape extends BaseShape {
 		return new Rect(x, y, x1 - x, y1 - y);
 	}
 
-	createSvgShape() {
+	toPath2D() {
 		if (this.points.length === 0) {
 			return new Path2D();
 		}
-		const svg = new Path2D();
-		svg.moveTo(0, 0);
+		const path2d = new Path2D();
+		path2d.moveTo(0, 0);
 		this.arcs.map(([point1, point2]) => {
-			svg.addPath(this.createLine(point1, point2));
+			path2d.addPath(this.createLine(point1, point2));
 		});
-		svg.closePath();
-		return svg;
+		path2d.closePath();
+		return path2d;
 	}
 
 	private get arcs() {

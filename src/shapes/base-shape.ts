@@ -1,7 +1,17 @@
 import { Point, Rect } from 'openseadragon';
-import { uid } from '../utils';
+import { linearShade, uid } from '../utils';
+
+export interface ShapeConstructor {
+	new (
+		drawOptions: DrawingOptions,
+		viewer: OpenSeadragon.Viewer,
+	): BaseShape;
+}
 
 export interface DrawingOptions {
+	/**
+	 * 'rgb(r,g,b)' | 'rgba(r,g,b,a)'
+	 */
 	color: string;
 	lineWidth: number;
 	fill: string;
@@ -13,6 +23,7 @@ export abstract class BaseShape {
 
 	id: string = uid();
 	hidden = false;
+	isHighlighted = false;
 
 	get isDisposed() {
 		return this._isDisposed;
@@ -21,7 +32,7 @@ export abstract class BaseShape {
 	get isDrawing() {
 		return this._isDrawing;
 	}
-	abstract readonly rect: Rect;
+	abstract readonly boundingBox: Rect;
 
 	constructor(
 		protected drawingOptions: DrawingOptions,
@@ -38,11 +49,26 @@ export abstract class BaseShape {
 
 	draw(context2d: CanvasRenderingContext2D): void {
 		this.setDrawOptions(context2d);
-		const svg = this.createSvgShape();
+		const svg = this.toPath2D();
 
 		context2d.stroke(svg);
-		context2d.fill(svg);
+		context2d.fill(svg, 'evenodd');
 		context2d.save();
+	}
+
+	startDrawing() {
+		this._isDrawing = true;
+	}
+
+	isPointOver(
+		localPoint: Point,
+		context2d: CanvasRenderingContext2D,
+	) {
+		return context2d.isPointInStroke(
+			this.toPath2D(),
+			localPoint.x,
+			localPoint.y,
+		);
 	}
 
 	protected toViewerCoords(point: Point) {
@@ -54,7 +80,9 @@ export abstract class BaseShape {
 	protected setDrawOptions(
 		context2d: CanvasRenderingContext2D,
 	) {
-		context2d.strokeStyle = this.drawingOptions.color;
+		context2d.strokeStyle = this.isHighlighted
+			? this.drawingOptions.color
+			: linearShade(0.3, this.drawingOptions.color);
 		context2d.fillStyle = this.drawingOptions.fill;
 		context2d.lineWidth = this.drawingOptions.lineWidth;
 	}
@@ -63,12 +91,7 @@ export abstract class BaseShape {
 		this._isDrawing = false;
 	}
 
-	startDrawing(point: Point) {
-		this._isDrawing = true;
-		this.onMouseDown(point);
-	}
-
-	abstract createSvgShape(): Path2D;
+	abstract toPath2D(): Path2D;
 
 	abstract onMouseDown(point: Point): void;
 	abstract onMouseMove(point: Point): void;

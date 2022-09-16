@@ -3,14 +3,21 @@ import { BrushShape } from '../shapes';
 import {
 	BaseShape,
 	DrawingOptions,
+	ShapeConstructor,
 } from '../shapes/base-shape';
 import { PolygonShape } from '../shapes/polygon';
 import { RectShape } from '../shapes/rect';
 
+export enum ShapeNames {
+	RectShape = 'RectShape',
+	PolygonShape = 'PolygonShape',
+	BrushShape = 'BrushShape',
+}
+
 const predefinedShapes = [
-	RectShape,
-	PolygonShape,
-	BrushShape,
+	{ name: ShapeNames.RectShape, value: RectShape },
+	{ name: ShapeNames.PolygonShape, value: PolygonShape },
+	{ name: ShapeNames.BrushShape, value: BrushShape },
 ];
 const defaultDrawingOptions = {
 	color: 'rgb(200, 0, 0)',
@@ -19,21 +26,16 @@ const defaultDrawingOptions = {
 };
 
 export class Drawer {
-	readonly shapes: Map<
-		string,
-		new (
-			drawOptions: DrawingOptions,
-			viewer: OpenSeadragon.Viewer,
-		) => BaseShape
-	> = new Map();
+	readonly shapes: Map<string, ShapeConstructor> =
+		new Map();
 	private drawerActiveShape: string;
 	private activeShape?: BaseShape;
 	drawOptions: DrawingOptions = defaultDrawingOptions;
 	constructor(private viewer: OpenSeadragon.Viewer) {
 		predefinedShapes.map((shape) => {
-			this.addShapes(shape);
+			this.addShape(shape.name, shape.value);
 		});
-		this.setDrawerShape(RectShape.name);
+		this.setDrawerShape(ShapeNames.RectShape);
 	}
 
 	get drawing() {
@@ -42,18 +44,14 @@ export class Drawer {
 		);
 	}
 
-	addShapes(
-		...shapeConstructors: (new (
-			drawOptions: DrawingOptions,
-			viewer: OpenSeadragon.Viewer,
-		) => BaseShape)[]
+	addShape(
+		name: ShapeNames | string,
+		shapeConstructor: ShapeConstructor,
 	) {
-		shapeConstructors.map((shape) =>
-			this.shapes.set(shape.name, shape),
-		);
+		this.shapes.set(name, shapeConstructor);
 	}
 
-	setDrawerShape(name: string) {
+	setDrawerShape(name: ShapeNames | string) {
 		if (this.shapes.has(name)) {
 			this.drawerActiveShape = name;
 		} else {
@@ -83,12 +81,11 @@ export class Drawer {
 			this.activeShape &&
 			!this.activeShape.isDrawing
 		) {
-			this.activeShape.dispose();
 			this.activeShape = undefined;
 		}
 		if (!this.activeShape) {
 			this.activeShape = this.getNewShape();
-			this.activeShape.startDrawing(point);
+			this.activeShape.startDrawing();
 		}
 		this.activeShape.onMouseDown(point);
 		return this.activeShape;
