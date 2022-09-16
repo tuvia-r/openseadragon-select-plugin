@@ -94,11 +94,13 @@ export class CanvasBase {
 	mount(container: HTMLElement) {
 		container.appendChild(this.canvas);
 		this.container = container;
+		this.requestUpdate();
 	}
 
 	resize(width: number, height: number) {
 		this.canvas.width = width;
 		this.canvas.height = height;
+		this.requestUpdate();
 	}
 
 	activate() {
@@ -106,15 +108,18 @@ export class CanvasBase {
 		this.canvas.style.zIndex = `${
 			CanvasBase.BASE_Z_INDEX + 1
 		}`;
+		this.requestUpdate();
 	}
 
 	deactivate() {
 		this.canvas.style.pointerEvents = 'none';
 		this.canvas.style.zIndex = `${CanvasBase.BASE_Z_INDEX}`;
+		this.requestUpdate();
 	}
 
 	show() {
 		this.canvas.style.visibility = 'visible';
+		this.requestUpdate();
 	}
 
 	hide() {

@@ -116,6 +116,12 @@ export class FrontCanvas extends CanvasBase {
 		return point;
 	}
 
+	deactivate(): void {
+		this.drawer.reset();
+		this.clear();
+		return super.deactivate();
+	}
+
 	onDrawEnd(callback: DrawEndCallback) {
 		this.onDrawEndCallbacks.push(callback);
 		return () =>

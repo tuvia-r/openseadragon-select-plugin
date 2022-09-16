@@ -114,4 +114,8 @@ export class Drawer {
 
 		return drawnShape;
 	}
+
+	reset() {
+		this.activeShape = undefined;
+	}
 }
