@@ -44,6 +44,7 @@ export class RectShape extends BaseShape {
 			return;
 		}
 		this.topLeft = point.clone();
+		this.bottomLeft = point.clone();
 	}
 	onMouseMove(point: Point): void {
 		if (!this.isDrawing) {
