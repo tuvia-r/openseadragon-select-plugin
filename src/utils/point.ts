@@ -122,7 +122,19 @@ let point: typeof OsdPoint =
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
-point = window?.OpenSeadragon?.Point ?? PointImplementation;
+let osd = window?.OpenSeadragon;
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-ignore
+if (!osd) {
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	//@ts-ignore
+	osd = require('openseadragon');
+}
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+point = osd?.Point ?? PointImplementation;
 
 export type Point = OsdPoint;
 

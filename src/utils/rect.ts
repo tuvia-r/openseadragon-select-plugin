@@ -418,7 +418,18 @@ let rect: typeof OsdRect =
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
-rect = window?.OpenSeadragon?.Rect ?? RectImplementation;
+let osd = window?.OpenSeadragon;
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-ignore
+if (!osd) {
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	//@ts-ignore
+	osd = require('openseadragon');
+}
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-ignore
+rect = osd?.Rect ?? RectImplementation;
 
 export type Rect = OsdRect;
 // eslint-disable-next-line @typescript-eslint/naming-convention
