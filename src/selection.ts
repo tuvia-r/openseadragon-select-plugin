@@ -1,7 +1,8 @@
-import { Rect, Viewer } from 'openseadragon';
+import { Viewer } from 'openseadragon';
 import { OsdSelectionHandler } from './handler';
 import { ShapeSelection } from './selection/shape-selection';
 import { BaseShape } from './shapes/base-shape';
+import { Rect } from './utils/rect';
 
 export interface ViewerSelectionOptions {
 	/**
@@ -45,16 +46,6 @@ export function selection(
 	options: ViewerSelectionOptions,
 ) {
 	this.initSelection();
-	if (options.keep) {
-		const originalCallback = options.onSelection;
-		options.onSelection = (
-			rect: Rect,
-			shape: BaseShape,
-		) => {
-			this.selectionHandler.addShape(shape);
-			return originalCallback(rect, shape);
-		};
-	}
 	return new ShapeSelection(
 		this.selectionHandler.frontCanvas,
 		wrapSelectionCallback(this, options),
@@ -68,3 +59,8 @@ export function initSelection(this: Viewer) {
 		);
 	}
 }
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// eslint-disable-next-line prettier/prettier
+window.OsdSelectionPlugin = {selection, initSelection};

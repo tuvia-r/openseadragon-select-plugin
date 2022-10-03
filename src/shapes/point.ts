@@ -1,4 +1,5 @@
-import { Point, Rect } from 'openseadragon';
+import { Point } from '../utils/point';
+import { Rect } from '../utils/rect';
 import { BaseShape } from './base-shape';
 
 export class PointShape extends BaseShape {

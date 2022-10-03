@@ -1,4 +1,4 @@
-import { Point } from 'openseadragon';
+import { Point } from './point';
 
 export const areLinesIntersecting = (
 	line1: [Point, Point],

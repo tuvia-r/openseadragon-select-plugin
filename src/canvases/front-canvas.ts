@@ -1,6 +1,6 @@
-import { Point } from 'openseadragon';
 import { Drawer } from '../drawer/draw-shape';
 import { BaseShape } from '../shapes/base-shape';
+import { Point } from '../utils/point';
 import { CanvasBase } from './canvas-base';
 
 export type DrawEndCallback = (

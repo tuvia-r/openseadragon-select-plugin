@@ -1,6 +1,6 @@
-import './install';
 import { OsdSelectionHandler } from './handler';
 import { ViewerSelectionType } from './selection';
+import './install';
 export * from './shapes';
 export { ShapeNames } from './drawer/draw-shape';
 

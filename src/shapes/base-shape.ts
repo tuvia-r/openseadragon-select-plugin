@@ -1,5 +1,6 @@
-import { Point, Rect } from 'openseadragon';
 import { linearShade, uid } from '../utils';
+import { Point } from '../utils/point';
+import { Rect } from '../utils/rect';
 
 export interface ShapeConstructor {
 	new (

@@ -1,4 +1,5 @@
-import { Point, Rect } from 'openseadragon';
+import { Point } from '../utils/point';
+import { Rect } from '../utils/rect';
 import { GroupShape } from './group';
 import { LineShape } from './line';
 import { PointShape } from './point';

@@ -1,5 +1,5 @@
-import { Rect } from 'openseadragon';
 import { RectShape } from '../shapes/rect';
+import { Rect } from '../utils/rect';
 
 export class SelectionBase<
 	Shape = RectShape,
