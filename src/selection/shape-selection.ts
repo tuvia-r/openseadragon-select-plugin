@@ -1,9 +1,9 @@
-import { Rect } from 'openseadragon';
 import {
 	DrawEndCallback,
 	FrontCanvas,
 } from '../canvases/front-canvas';
 import { BaseShape } from '../shapes/base-shape';
+import { Rect } from '../utils/rect';
 import { SelectionBase } from './selection-base';
 
 export class ShapeSelection extends SelectionBase<BaseShape> {

@@ -1,4 +1,3 @@
-import { Point } from 'openseadragon';
 import { BrushShape } from '../shapes';
 import {
 	BaseShape,
@@ -7,6 +6,7 @@ import {
 } from '../shapes/base-shape';
 import { PolygonShape } from '../shapes/polygon';
 import { RectShape } from '../shapes/rect';
+import { Point } from '../utils/point';
 
 export enum ShapeNames {
 	RectShape = 'RectShape',
