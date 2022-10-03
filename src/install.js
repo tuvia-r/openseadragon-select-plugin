@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 (function () {
-	// eslint-disable-next-line @typescript-eslint/no-empty-function
-	var require = window.require || function () {};
 	var osd = window.OpenSeadragon;
 	var plugin = window.OsdSelectionPlugin;
 	if (!osd) {
